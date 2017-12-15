@@ -1,1 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
+.routerlink-active {
+	font-weight: 900;
+}
+
+.red-alert {
+	color: #ff3860;
+}
+
+.bottom-info {
+	position: fixed;
+	width: 100%;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 10;
+	padding: 15px;
+	background-color: #fff;
+	border-top: 1px solid #dbdbdb;
+}
+
+.bottom-info span {
+	line-height: 36px;
+}
+
+.bottom-info .delete {
+	float: right;
+}
+
+td {
+	vertical-align: middle;
+}

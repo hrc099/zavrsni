@@ -1,0 +1,47 @@
+<div>
+	<h2 class="is-size-2">Upload datoteka</h2>
+	<span [style.display]="error?'block':'none'" class="red-alert">
+		{{ error }}
+	</span>
+	<form (ngSubmit)="uploadDat()" #datForm="ngForm" enctype="multipart/form-data">
+		<div class="file has-name">
+		  <label class="file-label">
+		    <input (change)="fileChangeEvent($event)" class="file-input" type="file" #fileInput name="datoteka" multiple="multiple">
+		    <span class="file-cta">
+		      <span class="file-icon">
+		        <i class="fa fa-upload"></i>
+		      </span>
+		      <span class="file-label">
+		        Izaberi datoteke…
+		      </span>
+		    </span>
+		  </label>
+		</div>
+		<br>
+		<small>
+			Najveći broj datoteka u jednom prijenosu: 10
+			<br>
+			Najveća veličina pojedinačne datoteke: 100MB
+		</small>
+		<br>
+		<button type="submit" class="button is-success" [disabled]="!(filesToUpload.length>0) || !checkFileSizes(filesToUpload)">Učitaj datoteke</button>
+	</form>
+	<br>
+	<span>
+		Broj odabranih datoteka: {{ filesToUpload.length }}
+	</span>
+	<br>
+	<div class="box" *ngIf="filesToUpload.length > 0">
+		<ul>
+			<li *ngFor="let dat of filesToUpload">
+				{{ dat.name }}
+				<span [ngClass]="{'red-alert':dat.size>100000000}">
+					{{ dat.size/1000000 | number:'1.1-2' }}MB
+				</span>
+			</li>
+		</ul>
+	</div>
+	<span class="red-alert">
+		{{ err }}
+	</span>
+</div>
