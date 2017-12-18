@@ -8,12 +8,14 @@
 			  		Odabir članka za uređivanje:
 			  	</label>
 			  	<div class="control">
-			  		<select #selectSadrzaj (change)="setNoviClanak(selectSadrzaj.value)" class="select">
-					  	<option disabled selected value> -- Odaberi članak -- </option>
-					  	<option *ngFor="let clanak of sadrzaj" [value]="sadrzaj.indexOf(clanak)">
-					  		{{ clanak.name }}
-					  	</option>
-					</select>
+				  	<div class="select">
+				  		<select #selectSadrzaj (change)="setNoviClanak(selectSadrzaj.value)">
+						  	<option disabled selected value> -- Odaberi članak -- </option>
+						  	<option *ngFor="let clanak of sadrzaj" [value]="sadrzaj.indexOf(clanak)">
+						  		{{ clanak.name }}
+						  	</option>
+						</select>
+				  	</div>
 			  	</div>
 			  </div>
 			  <div *ngIf="trenutniSadrzaj">
@@ -41,7 +43,9 @@
 		    	</div>
 		    	<img  *ngIf="trenutniSadrzaj.img" [src]="trenutniSadrzaj.img">
 		    	<br>
-		    	<button type="submit" [disabled]="!sadrzajForm.form.valid" class="button is-success">Spremi promjene</button>
+		    	<button type="submit" [disabled]="!sadrzajForm.form.valid" class="button is-info">
+		    		Spremi promjene
+		    	</button>
 		    	<button (click)="delSadrzaj(selectSadrzaj.value)" class="button is-danger">
 		    		Izbriši članak
 		    	</button>
@@ -55,10 +59,12 @@
   				<label for="clanakType" class="label">
   					Tip članka
   				</label>
-  				<select #selectTip (change)="setTip()" required name="clanakType" class="select">
-  					<option selected value="false">Bez slike</option>
-  					<option value="true">Sa slikom</option>
-  				</select>
+	  			<div class="select">
+	  				<select #selectTip (change)="setTip()" required name="clanakType" class="select">
+	  					<option selected value="false">Bez slike</option>
+	  					<option value="true">Sa slikom</option>
+	  				</select>
+	  			</div>
   			</div>
   			<div class="field">
   				<label for="noviClanakName" class="label">
@@ -81,7 +87,7 @@
 	    		</div>
 	    	</div>
 	    	<br>
-	    	<button type="submit" [disabled]="!addSadrzajForm.form.valid" class="button is-success">Dodaj članak</button>
+	    	<button type="submit" [disabled]="!addSadrzajForm.form.valid" class="button is-info">Dodaj članak</button>
   		</form>
   	</div>
   </div>

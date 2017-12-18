@@ -25,6 +25,8 @@ export class ClanoviFormaComponent implements OnInit {
   searchText: string = '';
   nameBackup: string = '';
   surnameBackup: string = '';
+  statusBackup: string = '';
+  isActiveBackup: boolean;
 
   // Create an instance of the DataService through dependency injection
   constructor(private _dataService: DataService) {
@@ -60,9 +62,9 @@ export class ClanoviFormaComponent implements OnInit {
   		user.isEditMode = state;
   		this.nameBackup = user.name;
   		this.surnameBackup = user.surname;
+  		this.statusBackup = user.status;
+  		this.isActiveBackup = user.isActive;
   	} else {
-  		user.name = this.nameBackup;
-  		user.surname = this.surnameBackup;
   		delete user.isEditMode;
   	}
   }
@@ -89,16 +91,26 @@ export class ClanoviFormaComponent implements OnInit {
   		this.error = "Ime, prezime i status člana moraju biti popunjeni!";
   		return;
   	} else {
+  		user.name = this.capitalizeFirstLetter(user.name);
+  		user.surname = this.capitalizeFirstLetter(user.surname);
+  		//console.log(user.name + " " + user.surname);
   		updUser = {
   			_id: user._id,
-  			name: this.capitalizeFirstLetter(user.name),
-  			surname: this.capitalizeFirstLetter(user.surname),
+  			name: user.name,
+  			surname: user.surname,
   			status: user.status,
   			isActive: user.isActive
   		};
   		this._dataService.updateClan(updUser)
   			.subscribe();
   	}
+  }
+
+  cancelChanges(user) {
+  	user.name = this.nameBackup;
+  	user.surname = this.surnameBackup;
+  	user.status = this.statusBackup;
+  	user.isActive = this.isActiveBackup;
   }
 
   updOnEnter(user) {
@@ -130,11 +142,6 @@ export class ClanoviFormaComponent implements OnInit {
   			this._dataService.getUsers()
         		.subscribe(res => this.clanovi = res);
   		});
-  	/*for(let i = 0; i < clanovi.length; i++) {
-		if(clanovi[i]._id == clan._id) {
-			clanovi.splice(i, 1);
-		}
-	}*/
 	this.msgHidden=false;
   }
 

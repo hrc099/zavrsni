@@ -1,132 +1,150 @@
-<span>
-	{{ error }}
-</span>
-<h2 class="is-size-2">Članovi</h2>
-
-<div>
-  <h3 class="is-size-3">Dodavanje novog člana</h3>
-  <form (ngSubmit)="addClan()" #formAddClan="ngForm">
-  	<div>
-		<label for="newClanName" class="label">Ime</label>
-		<input type="text" id="newClanName" required [(ngModel)]="newClan.name" name="newClanName" class="input">
+<div class="columns">
+  <div class="column">
+	  <h3 class="is-size-3">Popis članova</h3>
+	  <div class="field">
+	  	<label for="search" class="label">Pretraga članova</label>
+	  	<div class="control has-icons-left">
+	  		<input [(ngModel)]="searchText" class="input" name="search">
+	  		<span class="icon is-small is-left">
+	    		<i class="fa fa-search" aria-hidden="true"></i>
+	    	</span>
+	  	</div>
+	  </div>
+	  <table class="table">
+	  	<tr>
+	  		<th>#</th>
+	  		<th>Ime</th>
+	  		<th>Prezime</th>
+	  		<th>Status članstva</th>
+	  		<th>Aktivan</th>
+	  		<th class="th-center">
+	  			<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+	  		</th>
+	  		<th class="th-center">
+	  			<i class="fa fa-trash-o" aria-hidden="true"></i>
+	  		</th>
+	  	</tr>
+	  	<tr *ngFor="let clan of clanovi | filter:searchText | sortBy:'surname'; let i = index">
+	  		<td>
+	  			{{ i + 1 }}
+	  		</td>
+	  		<td>
+	  			<span [style.display]="clan.isEditMode?'none':'inline-block'">
+	  				{{ clan.name }}
+	  			</span>
+	  			<input type="text" id="clanName" required [(ngModel)]="clanovi[i].name" (keyup.enter)="updOnEnter(clan)" name="clanName" [style.display]="!clan.isEditMode?'none':'inline-block'" class="input">
+	  		</td>
+	  		<td>
+	  			<span [style.display]="clan.isEditMode?'none':'inline-block'">
+	  				{{ clan.surname }}
+	  			</span>
+	  			<input type="text" id="clanSurname" required [(ngModel)]="clanovi[i].surname" (keyup.enter)="updOnEnter(clan)" name="clanSurname"  [style.display]="!clan.isEditMode?'none':'inline-block'" class="input">
+	  		</td>
+	  		<td>
+	  			<span [style.display]="clan.isEditMode?'none':'inline-block'">
+	  				{{ clan.status }}
+	  			</span>
+		  		<div [style.display]="!clan.isEditMode?'none':'inline-block'" class="select">
+		  			<select #selectStatus (change)="setStatusClan(clan, selectStatus.value)">
+		  				<option [selected]="clan.status==='redovno'" value="redovno">redovno</option>
+		  				<option [selected]="clan.status==='izvanredno'" value="izvanredno">izvanredno</option>
+		  				<option [selected]="clan.status==='počasno'" value="počasno">počasno</option>
+		  			</select>
+		  		</div>
+	  		</td>
+	  		<td>
+	  			<span [style.display]="clan.isEditMode?'none':'inline-block'">
+	  				{{ clan.isActive?"aktivan":"neaktivan" }}
+	  			</span>
+		  		<div [style.display]="!clan.isEditMode?'none':'inline-block'" class="select">
+		  			<select #selectActive (change)="setIsActive(clan, selectActive.value)">
+		  				<option value=true>aktivan</option>
+		  				<option [selected]="!clan.isActive" value>neaktivan</option>
+		  			</select>
+		  		</div>
+	  		</td>
+	  		<td>
+	  			<button class="button" [style.display]="clan.isEditMode?'none':'inline-block'" (click)="setEditState(clan, true)">
+	  				Uredi člana
+	  			</button>
+	  			<button  class="button" [disabled]="!clan.name||!clan.surname" [style.display]="!clan.isEditMode?'none':'inline-block'" (click)="updClan(clan, i);setEditState(clan);">
+	  				<span>
+	  					<i class="fa fa-check" aria-hidden="true"></i> 
+	  				</span>
+	  			</button>
+	  			<button class="button" [style.display]="!clan.isEditMode?'none':'inline-block'" (click)="cancelChanges(clan);setEditState(clan);">
+	  				<i class="fa fa-undo" aria-hidden="true"></i>
+	  			</button>
+	  		</td>
+	  		<td>
+	  			<button (click)="delClan(clan)" class="button is-danger">
+	  				<span>
+	  					Izbriši
+	  				</span>
+	  			</button>
+	  		</td>
+	  	</tr>
+	  </table>
+	  <div [style.display]="msgHidden?'none':'block'" class="bottom-info">
+	  	<div class="container">
+	  		<span>
+	  			Izbrisali ste člana {{ backupClan.name }} {{ backupClan.surname }}.
+	  		</span>
+		  	<button class="button" (click)="reviveClan();this.msgHidden=true;">
+		  		Vrati člana 
+		  		<i class="fa fa-undo fa-fw" aria-hidden="true"></i>
+		  	</button>
+		  	<button class="button" (click)="msgHidden=true">
+		  		OK 
+		  		<i class="fa fa-check fa-fw" aria-hidden="true"></i>
+		  	</button>
+		  	<button class="delete" (click)="msgHidden=true"></button>
+	  	</div>
+	  </div>
+	  <div [style.display]="error===''?'none':'block'" class="bottom-info red-alert">
+	  	<div class="container">
+	  		<span>
+	  			{{ error }}
+	  		</span>
+		  	<button class="delete" (click)="error=''"></button>
+	  	</div>
+	  </div>
 	</div>
-	<div>
-		<label for="newClanSurname" class="label">Prezime</label>
-		<input type="text" id="newClanSurname" required [(ngModel)]="newClan.surname" name="newClanSurname" class="input">
+	<div class="column">
+	  	<h3 class="is-size-3">Dodavanje novog člana</h3>
+		<form (ngSubmit)="addClan()" #formAddClan="ngForm">
+			<div class="field">
+				<label for="newClanName" class="label">Ime</label>
+				<input type="text" id="newClanName" required [(ngModel)]="newClan.name" name="newClanName" class="input">
+			</div>
+			<div>
+				<label for="newClanSurname" class="label">Prezime</label>
+				<input type="text" id="newClanSurname" required [(ngModel)]="newClan.surname" name="newClanSurname" class="input">
+			</div>
+			<div class="field">
+				<label for="newClanStatus" class="label">Status članstva</label>
+				<div class="control">
+					<div class="select">
+						<select id="newClanStatus" required [(ngModel)]="newClan.status" name="newClanStatus">
+							<option value="redovno">redovno</option>
+							<option value="izvanredno">izvanredno</option>
+							<option value="počasno">počasno</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="field">
+				<label for="newClanIsActive" class="label">Aktivan</label>
+				<div class="control">
+					<div class="select">
+						<select id="newClanIsActive" required [(ngModel)]="newClan.isActive" name="newClanIsActive" class="select">
+							<option value=true>aktivan</option>
+							<option value=false>neaktivan/bivši</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<button type="submit" [disabled]="!formAddClan.form.valid" class="button is-info">Dodaj člana</button>
+		</form>
 	</div>
-	<div>
-		<label for="newClanStatus" class="label">Status članstva</label>
-		<select id="newClanStatus" required [(ngModel)]="newClan.status" name="newClanStatus" class="select">
-			<option value="redovno">redovno</option>
-			<option value="izvanredno">izvanredno</option>
-			<option value="počasno">počasno</option>
-		</select>
-	</div>
-	<div>
-		<label for="newClanIsActive" class="label">Aktivan</label>
-		<select id="newClanIsActive" required [(ngModel)]="newClan.isActive" name="newClanIsActive" class="select">
-			<option value=true>aktivan</option>
-			<option value=false>neaktivan/bivši</option>
-		</select>
-	</div>
-	<br>
-	<button type="submit" [disabled]="!formAddClan.form.valid" class="button is-success">Dodaj člana</button>
-  </form>
-  <h3 class="is-size-3">Popis članova</h3>
-  <input [(ngModel)]="searchText" placeholder="Pretraga članova po imenu ili prezimenu" class="input">
-  <table class="table">
-  	<tr>
-  		<th>#</th>
-  		<th>ID</th>
-  		<th>Ime</th>
-  		<th>Prezime</th>
-  		<th>Status članstva</th>
-  		<th>Aktivan</th>
-  		<th class="th-center">
-  			<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-  		</th>
-  		<th class="th-center">
-  			<i class="fa fa-trash-o" aria-hidden="true"></i>
-  		</th>
-  	</tr>
-  	<tr *ngFor="let clan of clanovi | filter:searchText | sortBy:'surname'; let i = index">
-  		<td>
-  			{{ i + 1 }}
-  		</td>
-  		<td>
-  			{{ clan._id }}
-  		</td>
-  		<td>
-  			<span [style.display]="clan.isEditMode?'none':'inline-block'">
-  				{{ clan.name }}
-  			</span>
-  			<input type="text" id="clanName" required [(ngModel)]="clan.name" (keyup.enter)="updOnEnter(clan)" name="clanName" [style.display]="!clan.isEditMode?'none':'inline-block'" class="input">
-  		</td>
-  		<td>
-  			<span [style.display]="clan.isEditMode?'none':'inline-block'">
-  				{{ clan.surname }}
-  			</span>
-  			<input type="text" id="clanSurname" required [(ngModel)]="clan.surname" name="clanSurname"  [style.display]="!clan.isEditMode?'none':'inline-block'" class="input">
-  		</td>
-  		<td>
-  			<span [style.display]="clan.isEditMode?'none':'inline-block'">
-  				{{ clan.status }}
-  			</span>
-  			<select #selectStatus [style.display]="!clan.isEditMode?'none':'inline-block'" (change)="setStatusClan(clan, selectStatus.value)" class="select">
-  				<option [selected]="clan.status==='redovno'" value="redovno">redovno</option>
-  				<option [selected]="clan.status==='izvanredno'" value="izvanredno">izvanredno</option>
-  				<option [selected]="clan.status==='počasno'" value="počasno">počasno</option>
-  			</select>
-  		</td>
-  		<td>
-  			<span [style.display]="clan.isEditMode?'none':'inline-block'">
-  				{{ clan.isActive?"aktivan":"neaktivan" }}
-  			</span>
-  			<select #selectActive [style.display]="!clan.isEditMode?'none':'inline-block'" (change)="setIsActive(clan, selectActive.value)" class="select">
-  				<option value=true>aktivan</option>
-  				<option [selected]="!clan.isActive" value>neaktivan/bivši</option>
-  			</select>
-  		</td>
-  		<td>
-  			<button class="button" [style.display]="clan.isEditMode?'none':'inline-block'" (click)="setEditState(clan, true)">
-  				Promijeni
-  			</button>
-  			<button  class="button is-success" [disabled]="!clan.name||!clan.surname" [style.display]="!clan.isEditMode?'none':'inline-block'" (click)="updClan(clan);setEditState(clan);">
-  				<span>
-  					Spremi 
-  				</span>
-  			</button>
-  			<button class="button" [style.display]="!clan.isEditMode?'none':'inline-block'" (click)="setEditState(clan)">
-  				<i class="fa fa-times" aria-hidden="true"></i>
-  			</button>
-  		</td>
-  		<td>
-  			<button (click)="delClan(clan)" class="button is-danger">
-  				<span>
-  					Izbriši
-  				</span>
-  			</button>
-  		</td>
-  	</tr>
-  </table>
-  <div [style.display]="msgHidden?'none':'block'" class="bottom-info">
-  	<div class="container">
-  		<span>
-  			Izbrisali ste člana {{ backupClan.name }} {{ backupClan.surname }}.
-  		</span>
-	  	<button class="button" (click)="reviveClan();this.msgHidden=true;">
-	  		Poništi 
-	  		<i class="fa fa-undo fa-fw" aria-hidden="true"></i>
-	  	</button>
-	  	<button class="delete" (click)="msgHidden=true"></button>
-  	</div>
-  </div>
-  <div [style.display]="error===''?'none':'block'" class="bottom-info red-alert">
-  	<div class="container">
-  		<span>
-  			{{ error }}
-  		</span>
-	  	<button class="delete" (click)="error=''"></button>
-  	</div>
-  </div>
 </div>
