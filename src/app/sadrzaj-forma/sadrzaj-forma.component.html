@@ -31,15 +31,20 @@
 		    	<div class="field">
 		    		<label for="text" class="label">Tekst</label>
 		    		<div class="control">
-		    			<textarea type="text" id="text" required [(ngModel)]="trenutniSadrzaj.text" name="text" class="textarea"></textarea>
+						<textarea type="text" id="text" required [(ngModel)]="trenutniSadrzaj.text" name="text" class="textarea" #textareaControl="ngModel"></textarea>
+						<span [style.display]="textareaControl.valid?'none':'inline-block'" class="red-alert">
+							Sadržaj mora imati tekst
+						</span>
 		    		</div>
 		    	</div>
-		    	<div *ngIf="trenutniSadrzaj.img" class="field">
+		    	<div *ngIf="trenutniSadrzaj.pic" class="field">
 		    		<label for="img" class="label">Slika</label>
 		    		<div class="control">
-		    			<input type="text" id="img" [(ngModel)]="trenutniSadrzaj.img" name="img" class="input">
+		    			<input type="text" id="img" required [(ngModel)]="trenutniSadrzaj.img" name="img" class="input" #imgControl="ngModel">
 		    		</div>
-		    		<p class="help">Ako ne bude odabrana nijedna slika, bit će postavljena defaultna "placeholder" slika</p>
+		    		<span [style.display]="imgControl.valid?'none':'inline-block'" class="red-alert">
+		    			Slika nije navedena - sadržaj sa slikom mora imati navedenu sliku
+					</span>
 		    	</div>
 		    	<img  *ngIf="trenutniSadrzaj.img" [src]="trenutniSadrzaj.img">
 		    	<br>

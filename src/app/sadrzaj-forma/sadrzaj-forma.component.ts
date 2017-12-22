@@ -19,6 +19,7 @@ export class SadrzajFormaComponent implements OnInit {
 	clanakSlika: boolean = false;
 	@ViewChild('addSadrzajForm') addSadrzajForm: any;
 	newSadrzaj: Sadrzaj = {
+		pic: false,
 		name: '',
 		text: ''
 	};
@@ -55,7 +56,7 @@ export class SadrzajFormaComponent implements OnInit {
 
 	setTip(bool) {
 		this.clanakSlika = !this.clanakSlika;
-		console.log(this.clanakSlika);
+		this.newSadrzaj.pic = this.clanakSlika;
 	}
 
 	addSadrzaj() {
@@ -64,7 +65,7 @@ export class SadrzajFormaComponent implements OnInit {
 				.subscribe(data => {
 					this.pullSadrzaj();
 				});
-			this.newSadrzaj = new Sadrzaj('', '');
+			this.newSadrzaj = new Sadrzaj(false, '', '');
 		}
 	}
 
