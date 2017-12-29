@@ -62,7 +62,8 @@ export class DataService {
   }
 
   postImg(formData) {
-    return this._http.post("/api/uploadImg", formData);
+    return this._http.post("/api/uploadImg", formData)
+      .map(res => res.json().data);
   }
 
 }

@@ -453,7 +453,8 @@ var DataService = (function () {
             .map(function (res) { return res.json().data; });
     };
     DataService.prototype.postImg = function (formData) {
-        return this._http.post("/api/uploadImg", formData);
+        return this._http.post("/api/uploadImg", formData)
+            .map(function (res) { return res.json().data; });
     };
     return DataService;
 }());
@@ -730,7 +731,6 @@ var SadrzajFormaComponent = (function () {
         var formData = new FormData();
         formData.append("uploadImg", this.imgToUpload);
         this._dataService.postImg(formData)
-            .map(function (response) { return response.json(); })
             .subscribe(function (response) { tip === 'novi' ? _this.newSadrzaj.img = "uploads/img/" + response.filename : _this.trenutniSadrzaj.img = "uploads/img/" + response.filename; }, function (error) { console.log(error); });
         this.imgToUpload = null;
         this.pullImgs();

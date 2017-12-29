@@ -114,7 +114,6 @@ export class SadrzajFormaComponent implements OnInit {
 		const formData: any = new FormData();
 		formData.append("uploadImg", this.imgToUpload);
 		this._dataService.postImg(formData)
-			.map(response => response.json())
 			.subscribe(
 				(response) => { tip === 'novi' ? this.newSadrzaj.img = `uploads/img/${response.filename}` : this.trenutniSadrzaj.img = `uploads/img/${response.filename}` },
 				(error) => { console.log(error) }

@@ -274,7 +274,8 @@ router.post('/uploadDoc', uploadArr.array('uploads[]', 10), (req, res, next) => 
 
 router.post('/uploadImg', uploadImg.single('uploadImg'), (req, res, next) => {
     try {
-        res.send(req.file);
+        response.data = req.file;
+        res.json(response);
     } catch (err) {
         res.send(err);
     }
