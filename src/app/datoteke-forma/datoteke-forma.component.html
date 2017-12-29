@@ -6,7 +6,7 @@
 	<form (ngSubmit)="uploadDat()" #datForm="ngForm" enctype="multipart/form-data">
 		<div class="file has-name">
 		  <label class="file-label">
-		    <input (change)="fileChangeEvent($event)" class="file-input" type="file" #fileInput name="datoteka" multiple="multiple">
+		    <input (change)="fileChangeEvent($event)" class="file-input" type="file" #fileInput name="datoteka" multiple="multiple" accept="application/x-zip-compressed,image/*">
 		    <span class="file-cta">
 		      <span class="file-icon">
 		        <i class="fa fa-upload"></i>
