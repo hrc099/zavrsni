@@ -1,0 +1,16 @@
+.imgList {
+    height: 250px;
+    overflow: auto;
+}
+figure {
+    width: 20%;
+    height: 200px;
+    display: inline-block;
+    margin-right: 20px;
+}
+
+figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

@@ -1,6 +1,6 @@
 <div>
   <div class="columns">
-  	<div class="column">
+  	<div class="column is-half">
   		  <h3 class="is-size-3">Uređivanje postojećih članaka</h3>
 		  <form (ngSubmit)="updSadrzaj(trenutniSadrzaj)" #sadrzajForm="ngForm">
 			  <div class="field">
@@ -37,18 +37,74 @@
 						</span>
 		    		</div>
 		    	</div>
-		    	<div *ngIf="trenutniSadrzaj.pic" class="field">
-		    		<label for="img" class="label">Slika</label>
-		    		<div class="control">
-		    			<input type="text" id="img" required [(ngModel)]="trenutniSadrzaj.img" name="img" class="input" #imgControl="ngModel">
-		    		</div>
-		    		<span [style.display]="imgControl.valid?'none':'inline-block'" class="red-alert">
-		    			Slika nije navedena - sadržaj sa slikom mora imati navedenu sliku
+		    	<div *ngIf="trenutniSadrzaj.pic">
+					<label class="label">Slika (odaberi jednu od opcija)</label>
+					<div class="tabs is-fullwidth">
+						<ul>
+							<li [className]="activeTabTrenutni===1?'is-active':''">
+								<a (click)="toggleActiveTab('trenutni', 1)">
+									<span>
+										Odaberi postojeću
+									</span>
+								</a>
+							</li>
+							<li [className]="activeTabTrenutni===2?'is-active':''">
+								<a (click)="toggleActiveTab('trenutni', 2)">
+									<span>
+										Uploadaj novu
+									</span>
+								</a>
+							</li>
+							<li [className]="activeTabTrenutni===3?'is-active':''">
+								<a (click)="toggleActiveTab('trenutni', 3)">
+									<span>
+										Upiši vanjski link
+									</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+					<br>
+					<div class="imgList" *ngIf="activeTabTrenutni===1">
+						<a *ngFor="let img of savedImgs" (click)="selectImgFromSrv('trenutni', img)">
+							<figure>
+								<img src="uploads/img/{{img}}">
+								<figcaption>
+									{{ img.length<15?img:img.slice(0,12)+'...' }}
+								</figcaption>
+							</figure>
+						</a>
+					</div>
+					<div *ngIf="activeTabTrenutni===2">
+						<div class="file">
+							<label class="file-label">
+								<input (change)="imgChangeEvent('trenutni', $event)" class="file-input" type="file" #imgInputTrenutni name="datoteka" [required]="!trenutniSadrzaj.img">
+								<span class="file-cta">
+								<span class="file-icon">
+									<i class="fa fa-upload"></i>
+								</span>
+								<span class="file-label">
+									Uploadaj novu sliku...
+								</span>
+								</span>
+							</label>
+						</div>
+					</div>
+					<div class="field" *ngIf="activeTabTrenutni===3">
+						<div class="control">
+							<input type="text" (keyup)="setExtLink('trenutni', $event)" name="img" class="input" placeholder="npr. http://via.placeholder.com/350x150" [required]="!trenutniSadrzaj.img">
+						</div>
+					</div>
+					<div class="is-clearfix"></div>
+					<br>
+					<span>
+						Trenutno odabrana slika: {{ trenutniSadrzaj.img }}
 					</span>
-		    	</div>
-		    	<img  *ngIf="trenutniSadrzaj.img" [src]="trenutniSadrzaj.img">
+					<br>
+				</div>
+		    	<img *ngIf="trenutniSadrzaj.img" [src]="trenutniSadrzaj.img">
 		    	<br>
-		    	<button type="submit" [disabled]="!sadrzajForm.form.valid" class="button is-info">
+		    	<button type="submit" [disabled]="!sadrzajForm.form.valid || validateImg('trenutni')" class="button is-info">
 		    		Spremi promjene
 		    	</button>
 		    	<button (click)="delSadrzaj(selectSadrzaj.value)" class="button is-danger">
@@ -57,7 +113,7 @@
 		    </div>
 		  </form>
   	</div>
-  	<div class="column">
+  	<div class="column is-half">
   		<h3 class="is-size-3">Dodavanje novog članka</h3>
   		<form (ngSubmit)="addSadrzaj()" #addSadrzajForm="ngForm">
   			<div class="field">
@@ -84,16 +140,75 @@
 	    		<div class="control">
 	    			<textarea type="text" [(ngModel)]="newSadrzaj.text" required name="noviClanakText" class="textarea"></textarea>
 	    		</div>
-	    	</div>
-	    	<div class="field" *ngIf="clanakSlika">
-	    		<label for="noviClanakImg" class="label">Slika</label>
-	    		<div class="control">
-	    			<input type="text" [(ngModel)]="newSadrzaj.img" name="noviClanakImg" class="input">
-	    		</div>
-	    	</div>
-	    	<br>
-	    	<button type="submit" [disabled]="!addSadrzajForm.form.valid" class="button is-info">Dodaj članak</button>
+			</div>
+			<div *ngIf="clanakSlika">
+				<label class="label">Slika (odaberi jednu od opcija)</label>
+				<div class="tabs is-fullwidth">
+					<ul>
+						<li [className]="activeTab===1?'is-active':''">
+							<a (click)="toggleActiveTab('novi', 1)">
+								<span>
+									Odaberi postojeću
+								</span>
+							</a>
+						</li>
+						<li [className]="activeTab===2?'is-active':''">
+							<a (click)="toggleActiveTab('novi', 2)">
+								<span>
+									Uploadaj novu
+								</span>
+							</a>
+						</li>
+						<li [className]="activeTab===3?'is-active':''">
+							<a (click)="toggleActiveTab('novi', 3)">
+								<span>
+									Upiši vanjski link
+								</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<br>
+				<div class="imgList" *ngIf="activeTab===1">
+					<a *ngFor="let img of savedImgs" (click)="selectImgFromSrv('novi', img)">
+						<figure>
+							<img src="uploads/img/{{img}}">
+							<figcaption>
+								{{ img.length<15?img:img.slice(0,12)+'...' }}
+							</figcaption>
+						</figure>
+					</a>
+				</div>
+				<div *ngIf="activeTab===2">
+					<div class="file">
+						<label class="file-label">
+							<input (change)="imgChangeEvent('novi', $event)" class="file-input" type="file" #imgInput name="datoteka" [required]="!newSadrzaj.img">
+							<span class="file-cta">
+							<span class="file-icon">
+								<i class="fa fa-upload"></i>
+							</span>
+							<span class="file-label">
+								Uploadaj novu sliku...
+							</span>
+							</span>
+						</label>
+					</div>
+				</div>
+				<div class="field" *ngIf="activeTab===3">
+					<div class="control">
+						<input type="text" (keyup)="setExtLink('novi', $event)" name="noviClanakImg" class="input" placeholder="npr. http://via.placeholder.com/350x150" [required]="!newSadrzaj.img">
+					</div>
+				</div>
+				<div class="is-clearfix"></div>
+				<br>
+				<span>
+					Trenutno odabrana slika: {{ newSadrzaj.img }}
+				</span>
+				<br>
+			</div>
+			<br>
+			<button type="submit" [disabled]="!addSadrzajForm.form.valid || validateImg('novi')" class="button is-info">Dodaj članak</button>
   		</form>
   	</div>
-  </div>
+	</div>
 </div>

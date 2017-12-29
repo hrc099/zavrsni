@@ -22,8 +22,10 @@
 			Najveći broj datoteka u jednom prijenosu: 10
 			<br>
 			Najveća veličina pojedinačne datoteke: 100MB
+			<br>
+			Dopušteni formati: jpg | jpeg | png | gif | svg | doc | docx | xls | xlsx | ppt | pptx | pdf | txt
 		</small>
-		<br>
+		<br><br>
 		<button type="submit" class="button is-info" [disabled]="!(filesToUpload.length>0) || !checkFileSizes(filesToUpload)">Učitaj datoteke</button>
 	</form>
 	<br>

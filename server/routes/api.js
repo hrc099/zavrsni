@@ -1,5 +1,6 @@
 const express = require('express');
 const multer = require('multer');
+const fs = require('fs-extra');
 const path = require('path');
 const router = express.Router();
 const MongoClient = require('mongodb').MongoClient;
@@ -7,15 +8,43 @@ const ObjectID = require('mongodb').ObjectID;
 
 // Set Storage Engine
 const storage = multer.diskStorage({
-    destination: './uploads/',
+    destination: (req, file, cb) => {
+        let uplPath = req.path==='/uploadDoc'?'doc':'img';
+        let path = `./uploads/${uplPath}`;
+        fs.mkdirsSync(path);
+        cb(null, path);
+    },
     filename: function(req, file, cb) {
-        cb(null, file.originalname + '-' + Date.now() + path.extname(file.originalname));
+        cb(null, Date.now() + '-' + file.originalname);
     }
 });
 
-// Init upload
-const upload = multer({
+// Filter images
+const imgFilter = (req, file, cb) => {
+    if (!file.originalname.match(/\.(jpg|jpeg|png|gif|svg)$/)) {
+        return cb(new Error('Samo slike formata jpg, jpeg, png, gif, svg su dopuštene'), false);
+    }
+    cb(null, true);
+};
+
+// Filter files incl. images
+const allFilter = (req, file, cb) => {
+    if (!file.originalname.match(/\.(jpg|jpeg|png|gif|svg|doc|docx|xls|xlsx|ppt|pptx|pdf|txt)$/)) {
+        return cb(new Error('Dopušteni su formati jpg|jpeg|png|gif|svg|doc|docx|xls|xlsx|ppt|pptx|pdf|txt'), false);
+    }
+    cb(null, true);
+};
+
+// Init single upload for img
+const uploadImg = multer({
     storage: storage,
+    fileFilter: imgFilter
+});
+
+// Init multiple upload for docs
+const uploadArr = multer({
+    storage: storage,
+    fileFilter: allFilter,
     limits: {
         fileSize: 100000000,
         files: 10
@@ -167,6 +196,7 @@ router.put('/sadrzaj/:_id', (req,res) => {
     var query = req.params._id;
     
     var updClanak = {
+        pic: req.body.pic,
         name: req.body.name,
         text: req.body.text,
         img: req.body.img
@@ -210,7 +240,6 @@ router.post('/addsadrzaj', (req, res) => {
 // Delete clanka
 router.delete('/sadrzaj/:_id', (req, res) => {
     var query = req.params._id;
-    console.log(query);
     connection((db) => {
         db.collection('sadrzaj').remove({
             _id: ObjectID(query)
@@ -224,7 +253,34 @@ router.delete('/sadrzaj/:_id', (req, res) => {
     });
 });
 
-router.post('/upload', upload.array('uploads[]', 10), (req, res, next) => {
+router.get('/uploads/img', (req, res) => {
+    fs.readdir(path.join('uploads', 'img'), (err, filenames) => {
+        if(err) {
+            res.send(err);
+        } else {
+            response.data = filenames;
+            res.json(response);
+        }
+    });
+});
+
+router.post('/uploadDoc', uploadArr.array('uploads[]', 10), (req, res, next) => {
+    try {
+        res.send(req.files);
+    } catch (err) {
+        res.send(err);
+    }
+});
+
+router.post('/uploadImg', uploadImg.single('uploadImg'), (req, res, next) => {
+    try {
+        res.send(req.file);
+    } catch (err) {
+        res.send(err);
+    }
+});
+
+router.post('/uploadImgs', uploadImg.array('uploads[]', 10), (req, res, next) => {
     try {
         res.send(req.files);
     } catch (err) {

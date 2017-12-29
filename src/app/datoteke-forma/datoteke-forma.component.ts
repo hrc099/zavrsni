@@ -33,21 +33,19 @@ export class DatotekeFormaComponent implements OnInit {
   uploadDat() {
   	const formData: any = new FormData();
     const files: Array<File> = this.filesToUpload;
-    console.log(files);
 
     for(let i =0; i < files.length; i++){
         formData.append("uploads[]", files[i], files[i]['name']);
     }
-    console.log('form data variable :   '+ formData.toString());
+    //console.log('form data variable :   '+ formData.toString());
 
     this._dataService.postDat(formData)
     	.map(files => files.json())
     	.subscribe(
-    		(response) => { files => console.log(files) },
-    		(error) => { this.err = error + ' - ' + 'Prevelika datoteka ili previše odabranih datoteka'; setTimeout(() => { this.err = ''; }, 5000); }
+    		(response) => console.log('Datoteka prenesena'),
+    		(error) => { this.err = error + ' - ' + 'Greška - prevelika datoteka, previše odabranih datoteka ili nedopušteni format'; setTimeout(() => { this.err = ''; }, 5000); }
     	);
     
     this.fileInput.nativeElement.value = "";
-
   }
 }
