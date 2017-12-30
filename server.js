@@ -25,7 +25,7 @@ app.use('/api', api);
 // Send requested img
 app.get('/uploads/img/:name', (req, res) => {
     let name = req.params.name;
-    res.sendFile(path.join(__dirname, `/uploads/img/${name}`));
+    res.sendFile(path.join(__dirname, `uploads/img/${name}`));
 });
 
 // Send all other requests to the Angular app
