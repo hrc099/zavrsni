@@ -35,7 +35,7 @@ const allFilter = (req, file, cb) => {
     cb(null, true);
 };
 
-// Init single upload for img
+// Init upload for img
 const uploadImg = multer({
     storage: storage,
     fileFilter: imgFilter
@@ -250,6 +250,17 @@ router.delete('/sadrzaj/:_id', (req, res) => {
                 res.json(result);
             }
         });
+    });
+});
+
+router.get('/uploads/doc', (req, res) => {
+    fs.readdir(path.join('uploads', 'doc'), (err, filenames) => {
+        if(err) {
+            res.send(err);
+        } else {
+            response.data = filenames;
+            res.json(response);
+        }
     });
 });
 

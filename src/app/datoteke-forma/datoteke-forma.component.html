@@ -1,49 +1,135 @@
-<div>
-	<h2 class="is-size-2">Upload datoteka</h2>
-	<span [style.display]="error?'block':'none'" class="red-alert">
-		{{ error }}
-	</span>
-	<form (ngSubmit)="uploadDat()" #datForm="ngForm" enctype="multipart/form-data">
-		<div class="file has-name">
-		  <label class="file-label">
-		    <input (change)="fileChangeEvent($event)" class="file-input" type="file" #fileInput name="datoteka" multiple="multiple" accept="application/x-zip-compressed,image/*">
-		    <span class="file-cta">
-		      <span class="file-icon">
-		        <i class="fa fa-upload"></i>
-		      </span>
-		      <span class="file-label">
-		        Izaberi datoteke…
-		      </span>
-		    </span>
-		  </label>
-		</div>
+<div class="card">
+	<header class="card-header">
+    <p class="card-header-title">
+      Upravljanje datotekama na serveru
+		</p>
+	</header>
+	<div class="card-content">
+    <div class="content">
+			Na serveru su kreirana dva direktorija, doc za dokumente i img za slike. img direktorij služi 
+			kako bi u njemu bile slike koje se mogu dodijeliti člancima na USGZ stranici. doc služi kao 
+			direktorij za pohranu dokumenata poput statuta i sl.
+    </div>
+  </div>
+</div>
+<br>
+<div class="columns">
+	<div class="column is-half">
+		<h3 class="is-size-3">doc repozitorij</h3>
+		<span [style.display]="error?'block':'none'" class="red-alert">
+			{{ error }}
+		</span>
 		<br>
-		<small>
-			Najveći broj datoteka u jednom prijenosu: 10
+		<form (ngSubmit)="uploadDat()" #datForm="ngForm" enctype="multipart/form-data">
+			<div class="file has-name">
+				<label class="file-label">
+					<input (change)="fileChangeEvent($event)" class="file-input" type="file" #fileInput name="datoteka" multiple="multiple">
+					<span class="file-cta">
+						<span class="file-icon">
+							<i class="fa fa-upload"></i>
+						</span>
+						<span class="file-label">
+							Izaberi dokumente za upload…
+						</span>
+					</span>
+				</label>
+			</div>
 			<br>
-			Najveća veličina pojedinačne datoteke: 100MB
-			<br>
-			Dopušteni formati: jpg | jpeg | png | gif | svg | doc | docx | xls | xlsx | ppt | pptx | pdf | txt
-		</small>
-		<br><br>
-		<button type="submit" class="button is-info" [disabled]="!(filesToUpload.length>0) || !checkFileSizes(filesToUpload)">Učitaj datoteke</button>
-	</form>
-	<br>
-	<span>
-		Broj odabranih datoteka: {{ filesToUpload.length }}
-	</span>
-	<br>
-	<div class="box" *ngIf="filesToUpload.length > 0">
-		<ul>
-			<li *ngFor="let dat of filesToUpload">
-				{{ dat.name }}
-				<span [ngClass]="{'red-alert':dat.size>100000000}">
-					{{ dat.size/1000000 | number:'1.1-2' }}MB
-				</span>
-			</li>
-		</ul>
+			<small>
+				Najveći broj datoteka u jednom prijenosu: 10
+				<br>
+				Najveća veličina pojedinačne datoteke: 100MB
+				<br>
+				Dopušteni formati: jpg | jpeg | png | gif | svg | doc | docx | xls | xlsx | ppt | pptx | pdf | txt
+			</small>
+			<br><br>
+			<button type="submit" class="button is-info" [disabled]="!(filesToUpload.length>0) || !checkFileSizes(filesToUpload)">Učitaj datoteke</button>
+		</form>
+		<br>
+		<span>
+			Broj odabranih datoteka: {{ filesToUpload.length }}
+		</span>
+		<br>
+		<div class="box" *ngIf="filesToUpload.length > 0">
+			<ul>
+				<li *ngFor="let dat of filesToUpload">
+					{{ dat.name }}
+					<span [ngClass]="{'red-alert':dat.size>100000000}">
+						{{ dat.size/1000000 | number:'1.1-2' }}MB
+					</span>
+				</li>
+			</ul>
+		</div>
+		<hr>
+		<b>Upravljanje dokumentima na serveru</b>
+		<br>
+		<div class="docList">
+			<a *ngFor="let doc of savedDocs">
+				<figure>
+					<i [className]="setImgByExt(doc)"></i>
+					<figcaption>
+						{{ doc.length<15?doc:doc.slice(0,12)+'...' }}
+					</figcaption>
+				</figure>
+			</a>
+		</div>
+		<span class="red-alert">
+			{{ err }}
+		</span>
 	</div>
-	<span class="red-alert">
-		{{ err }}
-	</span>
+	<div class="column is-half">
+		<h2 class="is-size-3">img repozitorij</h2>
+		<br>
+		<form (ngSubmit)="uploadImgs()" #imgsForm="ngForm" enctype="multipart/form-data">
+			<div class="file has-name">
+				<label class="file-label">
+					<input (change)="imgChangeEvent($event)" class="file-input" type="file" #imgInput name="slika" multiple="multiple" accept="application/x-zip-compressed,image/*">
+					<span class="file-cta">
+						<span class="file-icon">
+							<i class="fa fa-upload"></i>
+						</span>
+						<span class="file-label">
+							Izaberi slike za upload…
+						</span>
+					</span>
+				</label>
+			</div>
+			<br>
+			<small>
+				Najveći broj datoteka u jednom prijenosu: 10
+				<br>
+				Dopušteni formati: jpg | jpeg | png | gif | svg
+			</small>
+			<br><br>
+			<button type="submit" class="button is-info" [disabled]="!imgsToUpload.length>0">Učitaj datoteke</button>
+		</form>
+		<br>
+		<span>
+			Broj odabranih datoteka: {{ imgsToUpload.length }}
+		</span>
+		<br>
+		<div class="box" *ngIf="imgsToUpload.length > 0">
+			<ul>
+				<li *ngFor="let dat of imgsToUpload">
+					{{ dat.name }}
+					<span [ngClass]="{'red-alert':dat.size>100000000}">
+						{{ dat.size/1000000 | number:'1.1-2' }}MB
+					</span>
+				</li>
+			</ul>
+		</div>
+		<hr>
+		<b>Upravljanje slikama na serveru</b>
+		<br>
+		<div class="imgList">
+			<a *ngFor="let img of savedImgs">
+				<figure>
+					<img src="uploads/img/{{img}}">
+					<figcaption>
+						{{ img.length<15?img:img.slice(0,12)+'...' }}
+					</figcaption>
+				</figure>
+			</a>
+		</div>
+	</div>
 </div>

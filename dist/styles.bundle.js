@@ -35,7 +35,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\n.routerlink-active {\n\tfont-weight: 900;\n}\n\n.red-alert {\n\tcolor: #ff3860;\n}\n\n.bottom-info {\n\tposition: fixed;\n\twidth: 100%;\n\tbottom: 0;\n\tleft: 0;\n\tright: 0;\n\tz-index: 10;\n\tpadding: 15px;\n\tbackground-color: #fff;\n\tborder-top: 1px solid #dbdbdb;\n}\n\n.bottom-info span {\n\tline-height: 36px;\n}\n\n.bottom-info .delete {\n\tfloat: right;\n}\n\ntd {\n\tvertical-align: middle;\n}", ""]);
+exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\n.routerlink-active {\n\tfont-weight: 900;\n}\n\n.red-alert {\n\tcolor: #ff3860;\n}\n\n.bottom-info {\n\tposition: fixed;\n\twidth: 100%;\n\tbottom: 0;\n\tleft: 0;\n\tright: 0;\n\tz-index: 10;\n\tpadding: 15px;\n\tbackground-color: #fff;\n\tborder-top: 1px solid #dbdbdb;\n}\n\n.bottom-info span {\n\tline-height: 36px;\n}\n\n.bottom-info .delete {\n\tfloat: right;\n}\n\ntd {\n\tvertical-align: middle;\n}\n\n.imgList {\n    height: 250px;\n    overflow: auto;\n}\n\nfigure {\n    width: 20%;\n    height: 200px;\n    display: inline-block;\n    margin-right: 20px;\n}\n\nfigure img {\n    width: 100%;\n    height: 100%;\n    -o-object-fit: cover;\n       object-fit: cover;\n}\n\n.trenutna-figure {\n    width: auto;\n    height: 250px;\n}\n\n.trenutna-figure img {\n    -o-object-fit: contain;\n       object-fit: contain;\n}", ""]);
 
 // exports
 

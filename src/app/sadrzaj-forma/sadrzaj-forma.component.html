@@ -100,9 +100,11 @@
 					<span>
 						Trenutno odabrana slika: {{ trenutniSadrzaj.img }}
 					</span>
-					<br>
 				</div>
-		    	<img *ngIf="trenutniSadrzaj.img" [src]="trenutniSadrzaj.img">
+				<br>
+				<figure *ngIf="trenutniSadrzaj.img" class="trenutna-figure">
+					<img [src]="trenutniSadrzaj.img">
+				</figure>
 		    	<br>
 		    	<button type="submit" [disabled]="!sadrzajForm.form.valid || validateImg('trenutni')" class="button is-info">
 		    		Spremi promjene
