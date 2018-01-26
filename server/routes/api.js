@@ -277,6 +277,7 @@ router.get('/uploads/doc', (req, res) => {
         if(err) {
             res.send(err);
         } else {
+            console.log(filenames);
             response.data = filenames;
             res.json(response);
         }

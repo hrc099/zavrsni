@@ -12,7 +12,7 @@ export class DatotekeFormaComponent implements OnInit {
   // Doc managment
   @ViewChild('fileInput') fileInput;
   filesToUpload: Array<File> = [];
-  savedDocs;
+  savedDocs: Array<any> = [];
 
   // Img managment
   @ViewChild('imgInput') imgInput;
@@ -91,7 +91,12 @@ export class DatotekeFormaComponent implements OnInit {
 
   pullDocs() {
     this._dataService.getDocs().subscribe(
-      res => this.savedDocs = res
+      (res) => {
+        this.savedDocs = res;
+      },
+      (err) => {
+        console.log(err);
+      }
     );
   }
 

@@ -61,7 +61,7 @@ export class DataService {
 
   getDocs() {
     return this._http.get("/api/uploads/doc")
-      .map(res => res.json().data);
+      .map(res => {console.log(res.json().data);res.json().data});
   }
 
   getImgs() {
