@@ -12,7 +12,7 @@ export class DatotekeFormaComponent implements OnInit {
   // Doc managment
   @ViewChild('fileInput') fileInput;
   filesToUpload: Array<File> = [];
-  savedDocs: Array<any> = [];
+  savedDocs;
 
   // Img managment
   @ViewChild('imgInput') imgInput;
