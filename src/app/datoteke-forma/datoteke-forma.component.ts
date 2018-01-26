@@ -91,12 +91,7 @@ export class DatotekeFormaComponent implements OnInit {
 
   pullDocs() {
     this._dataService.getDocs().subscribe(
-      (res) => {
-        this.savedDocs = res;
-      },
-      (err) => {
-        console.log(err);
-      }
+      res => this.savedDocs = res
     );
   }
 
