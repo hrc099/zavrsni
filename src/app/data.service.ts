@@ -48,7 +48,6 @@ export class DataService {
   }
 
   deleteSadrzaj(_id) {
-    console.log("--" + _id + "--");
     return this._http.delete("/api/sadrzaj/"+_id);
   }
 
@@ -72,6 +71,20 @@ export class DataService {
 
   postImg(formData) {
     return this._http.post("/api/uploadImg", formData)
+      .map(res => res.json().data);
+  }
+
+  delDat(path) {
+    return this._http.post("/api/deleteDat", {path: path})
+      .map(res => res.json().data);
+  }
+
+  downloadDat(arr) {
+    return this._http.post("/api/downloadDat", arr);
+  }
+
+  delDats(arr) {
+    return this._http.post("/api/deleteDats", arr)
       .map(res => res.json().data);
   }
 

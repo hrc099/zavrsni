@@ -33,6 +33,10 @@ export class SadrzajFormaComponent implements OnInit {
 	imgToUpload: File;
 	savedImgs;
 
+	// Rollback izbrisanog članka
+	backupClanak = {};
+	rollbackSadrzajHidden: boolean = true;
+
 	constructor(private _dataService: DataService) { }
 
 	ngOnInit() {
@@ -66,10 +70,12 @@ export class SadrzajFormaComponent implements OnInit {
 	}
 
 	delSadrzaj(br) {
+		this.backupClanak = this.sadrzaj[br];
 		this._dataService.deleteSadrzaj(this.sadrzaj[br]._id)
 			.subscribe(data => {
 				this.pullSadrzaj();
 				this.setNoviClanak(0);
+				this.rollbackSadrzajHidden = false;
 			});
 	}
 
@@ -99,6 +105,14 @@ export class SadrzajFormaComponent implements OnInit {
 				});
 			this.newSadrzaj = new Sadrzaj(false, '', '');
 		}
+	}
+
+	rollbackSadrzaj() {
+		this._dataService.addSadrzaj(this.backupClanak)
+			.subscribe(data => {
+				this.pullSadrzaj();
+				this.rollbackSadrzajHidden = true;
+			});
 	}
 
 	toggleActiveTab(tip, n) {

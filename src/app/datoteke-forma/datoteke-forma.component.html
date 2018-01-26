@@ -5,17 +5,20 @@
 		</p>
 	</header>
 	<div class="card-content">
-    <div class="content">
-			Na serveru su kreirana dva direktorija, doc za dokumente i img za slike. img direktorij služi 
-			kako bi u njemu bile slike koje se mogu dodijeliti člancima na USGZ stranici. doc služi kao 
-			direktorij za pohranu dokumenata poput statuta i sl.
-    </div>
-  </div>
+		<div class="content">
+				Na serveru su dva repozitorija, doc za dokumente i img za slike. img direktorij služi 
+				kako bi u njemu bile slike koje se mogu dodijeliti člancima/sadržajima na USGZ stranici. doc služi kao 
+				repozitorij za pohranu dokumenata poput statuta i sl.
+		</div>
+  	</div>
 </div>
+<span *ngIf="err" class="bottom-info red-alert">
+	{{ err }}
+</span>
 <br>
+<h3 class="is-size-3">doc repozitorij</h3>
 <div class="columns">
 	<div class="column is-half">
-		<h3 class="is-size-3">doc repozitorij</h3>
 		<span [style.display]="error?'block':'none'" class="red-alert">
 			{{ error }}
 		</span>
@@ -47,7 +50,10 @@
 		</form>
 		<br>
 		<span>
-			Broj odabranih datoteka: {{ filesToUpload.length }}
+			Broj odabranih datoteka za upload: 
+			<span [ngClass]="{'red-alert':filesToUpload.length>10}">
+				{{ filesToUpload.length }}
+			</span>
 		</span>
 		<br>
 		<div class="box" *ngIf="filesToUpload.length > 0">
@@ -60,25 +66,56 @@
 				</li>
 			</ul>
 		</div>
-		<hr>
-		<b>Upravljanje dokumentima na serveru</b>
-		<br>
-		<div class="docList">
-			<a *ngFor="let doc of savedDocs">
-				<figure>
-					<i [className]="setImgByExt(doc)"></i>
-					<figcaption>
-						{{ doc.length<15?doc:doc.slice(0,12)+'...' }}
-					</figcaption>
-				</figure>
-			</a>
-		</div>
-		<span class="red-alert">
-			{{ err }}
-		</span>
 	</div>
 	<div class="column is-half">
-		<h2 class="is-size-3">img repozitorij</h2>
+		<b>Upravljanje dokumentima na serveru</b>
+		<br><br>
+		<div class="itemList docList">
+			<div *ngFor="let doc of savedDocs">
+				<a (click)="addSelectItem(this.selectedDocs, 'uploads/doc/'+doc)">
+					<figure [ngClass]="{'activeSelect': checkSelected(this.selectedDocs, 'uploads/doc/'+doc)}">
+						<i [className]="setImgByExt(doc)"></i>
+					</figure>
+				</a>
+				<button (click)="delItem('uploads/doc/'+doc)" class="delete"></button>
+				<figcaption>
+					<span>
+						{{ doc.length<18?doc:doc.slice(0,15)+'...' }}
+					</span>
+				</figcaption>
+				<span>
+					{{ doc }}
+				</span>
+			</div>
+		</div>
+		<div class="box" *ngIf="selectedDocs.length > 0">
+			<span>
+				Označene datoteke:
+			</span>
+			<br>
+			<span *ngFor="let selDoc of selectedDocs">
+				{{ selDoc }}
+			</span>
+			<br>
+			<button class="button">
+				<i class="fa fa-download" aria-hidden="true"></i>
+				<span>
+					Preuzmi
+				</span>
+			</button>
+			<button (click)="delItems(selectedDocs)" class="button">
+				<i class="fa fa-trash" aria-hidden="true"></i>
+				<span>
+					Izbriši
+				</span>
+			</button>
+		</div>
+	</div>
+</div>
+<hr>
+<h3 class="is-size-3">img repozitorij</h3>
+<div class="columns">
+	<div class="column is-half">
 		<br>
 		<form (ngSubmit)="uploadImgs()" #imgsForm="ngForm" enctype="multipart/form-data">
 			<div class="file has-name">
@@ -105,7 +142,10 @@
 		</form>
 		<br>
 		<span>
-			Broj odabranih datoteka: {{ imgsToUpload.length }}
+			Broj odabranih datoteka za upload: 
+			<span [ngClass]="{'red-alert':imgsToUpload.length>10}">
+				{{ imgsToUpload.length || 0 }}
+			</span>
 		</span>
 		<br>
 		<div class="box" *ngIf="imgsToUpload.length > 0">
@@ -118,18 +158,49 @@
 				</li>
 			</ul>
 		</div>
-		<hr>
+	</div>
+	<div class="is-half">
 		<b>Upravljanje slikama na serveru</b>
-		<br>
-		<div class="imgList">
-			<a *ngFor="let img of savedImgs">
-				<figure>
-					<img src="uploads/img/{{img}}">
-					<figcaption>
-						{{ img.length<15?img:img.slice(0,12)+'...' }}
-					</figcaption>
-				</figure>
+		<br><br>
+		<div class="itemList imgList">
+			<div *ngFor="let img of savedImgs">
+				<a (click)="addSelectItem(this.selectedImgs, 'uploads/img/'+img)">
+					<figure [ngClass]="{'activeSelect': checkSelected(this.selectedImgs, 'uploads/img/'+img)}">
+						<img src="uploads/img/{{img}}">
+					</figure>
+				</a>
+				<button (click)="delItem('uploads/img/'+img)" class="delete"></button>
+				<figcaption>
+					<span>
+						{{ img.length<18?img:img.slice(0,15)+'...' }}
+					</span>
+				</figcaption>
+				<span>
+					{{ img }}
+				</span>
+			</div>
+		</div>
+		<div class="box" *ngIf="selectedImgs.length > 0">
+			<span>
+				Označene datoteke:
+			</span>
+			<br>
+			<span *ngFor="let selImg of selectedImgs">
+				{{ selImg }}
+			</span>
+			<br>
+			<a class="button" (click)="downloadFiles(selectedImgs)" href="uploads/toDl.zip" download>
+				<i class="fa fa-download" aria-hidden="true"></i>
+				<span>
+					Preuzmi
+				</span>
 			</a>
+			<button (click)="delItems(selectedImgs)" class="button">
+				<i class="fa fa-trash" aria-hidden="true"></i>
+				<span>
+					Izbriši
+				</span>
+			</button>
 		</div>
 	</div>
 </div>

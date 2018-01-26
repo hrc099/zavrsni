@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+
 .routerlink-active {
 	font-weight: 900;
 }
@@ -31,16 +32,119 @@ td {
 	vertical-align: middle;
 }
 
-.imgList {
-    height: 250px;
+.chooseImgList, .itemList {
+	height: 250px;
     overflow: auto;
 }
 
+.chooseImgList a {
+	width: 20%;
+	position: relative;
+	float: left;
+	margin-right: 15px;
+}
+
+.itemList > div {
+	width: 20%;
+	position: relative;
+	float: left;
+	margin-right: 15px;
+}
+
+.itemList a {
+	display: inline-block;
+}
+
+.itemList > div > button {
+	display: none;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.imgList > div > button {
+	top: 5px;
+	right: 5px;
+}
+
+.itemList > div:hover > button {
+	display: initial;
+}
+
 figure {
-    width: 20%;
+	position: relative;
     height: 200px;
-    display: inline-block;
-    margin-right: 20px;
+	display: inline-block;
+}
+
+.chooseImgList figure, .itemList figure {
+	height: 100%;
+	width: 100%;
+}
+
+.chooseImgList img, .itemList img {
+	height: 200px;
+}
+
+figcaption {
+	width: 150px;
+}
+
+figcaption + span {
+	display: none;
+	position: absolute;
+	bottom: -2px;
+	left: 0;
+	background: #333;
+	color: #fff;
+	border-radius: 5px;
+	z-index: 3;
+}
+
+.chooseImgList > a:hover figcaption + span, .itemList > div:hover figcaption + span {
+	display: inline-block;
+}
+
+.itemList > div:hover figure::before {
+	display: block;
+}
+
+.itemList figure::before {
+	content: "\f00c";
+	font-family: FontAwesome;
+	font-size: 24px;
+   	font-weight: normal;
+	font-style: normal;
+	line-height: 1;
+	background: #181818;
+	color: #e6e6e6;
+	position: absolute;
+	left: 5px;
+	top: 5px;
+	z-index: 1;
+	border-radius: 2px;
+	display: none;
+}
+
+.itemList figure::after {
+	content: "\f00c";
+	font-family: FontAwesome;
+	font-size: 24px;
+   	font-weight: normal;
+	font-style: normal;
+	line-height: 1;
+	background: #181818;
+	color: #1e7c45;
+	position: absolute;
+	left: 5px;
+	top: 5px;
+	z-index: 2;
+	border-radius: 2px;
+	display: none;
+}
+
+.itemList figure.activeSelect::after{
+	display: initial;
 }
 
 figure img {

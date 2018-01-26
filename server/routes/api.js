@@ -5,6 +5,7 @@ const path = require('path');
 const router = express.Router();
 const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
+var archiver = require('archiver');
 
 // Set Storage Engine
 const storage = multer.diskStorage({
@@ -15,7 +16,7 @@ const storage = multer.diskStorage({
         cb(null, path);
     },
     filename: function(req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname);
+        cb(null, file.originalname + '_' + Date.now() + path.extname(file.originalname));
     }
 });
 
@@ -73,6 +74,24 @@ let response = {
     data: [],
     message: null
 };
+
+// Datoteka za zip
+var output = fs.createWriteStream('uploads/toDl.zip');
+var archive = archiver('zip', {
+    zlib: { level: 9 } // Sets the compression level.
+});
+// This event is fired when the data source is drained no matter what was the data source.
+// It is not part of this library but rather from the NodeJS Stream API.
+// @see: https://nodejs.org/api/stream.html#stream_event_end
+output.on('end', function() {
+    console.log('Data has been drained');
+});
+// good practice to catch this error explicitly
+archive.on('error', function(err) {
+    throw err;
+  });
+// pipe archive data to the file
+archive.pipe(output);
 
 // Get users
 router.get('/clanovi', (req, res) => {
@@ -298,6 +317,40 @@ router.post('/uploadImgs', uploadImg.array('uploads[]', 10), (req, res, next) =>
     } catch (err) {
         res.send(err);
     }
+});
+
+router.post('/deleteDat', (req, res) => {
+    let toDel = req.body.path;
+    fs.unlink(toDel, err => {
+        if(err) {
+            res.send(err);
+        } else {
+            response.data = 'Uspješno obrisana datoteka ' + toDel.split('/').pop();
+            res.json(response);
+        }
+    });
+});
+
+router.post('/downloadDat', (req, res) => {
+    let pathList = req.body;
+    pathList.forEach(path => {
+        archive.append(fs.createReadStream(path), { name: path.split('/').pop() });
+    });
+    archive.finalize();
+});
+
+router.post('/deleteDats', (req, res) => {
+    let pathList = req.body;
+    pathList.forEach(path => {
+        fs.unlink(path, err => {
+            if(err) {
+                response.data += 'Neuspješno brisanje datoteke ' + path.split('/').pop() + '\n';
+            } else {
+                response.data += 'Uspješno brisanje datoteke ' + path.split('/').pop() + '\n';
+            }
+        });
+    });
+    res.json(response);
 });
 
 module.exports = router;

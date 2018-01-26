@@ -19,6 +19,10 @@ export class DatotekeFormaComponent implements OnInit {
   imgsToUpload: Array<File> = [];
   savedImgs;
 
+  // Selected items
+  selectedDocs: Array<any> = [];
+  selectedImgs: Array<any> = [];
+
   err: string;
 
   constructor(private _dataService: DataService) { }
@@ -57,7 +61,9 @@ export class DatotekeFormaComponent implements OnInit {
     this._dataService.postDat(formData)
     	.map(files => files.json())
     	.subscribe(
-    		(response) => console.log('Datoteka prenesena'),
+    		(response) => {
+          this.pullDocs();
+        },
     		(error) => { this.err = error + ' - ' + 'Greška - prevelika datoteka, previše odabranih datoteka ili nedopušteni format'; setTimeout(() => { this.err = ''; }, 5000); }
     	);
     
@@ -86,7 +92,7 @@ export class DatotekeFormaComponent implements OnInit {
   pullDocs() {
     this._dataService.getDocs().subscribe(
       (res) => {
-        this.savedDocs = res.json();
+        this.savedDocs = res;
       },
       (err) => {
         console.log(err);
@@ -99,24 +105,68 @@ export class DatotekeFormaComponent implements OnInit {
 			.subscribe(res => this.savedImgs = res);
   }
   
-  detectExt(filename) {
+  detectExt(filename): string {
     return filename.split('.').pop();
   }
 
-  setImgByExt(doc) {
-    switch(this.detectExt(doc)) {
+  setImgByExt(doc): string {
+    let ext = this.detectExt(doc);
+    switch(ext) {
       case 'pdf':
         return 'fa fa-file-pdf-o';
-      case 'doc' || 'docx':
+      case 'doc':
+      case 'docx':
         return 'fa fa-file-word-o';
-      case 'xls' || 'xlsx':
-        return 'fa fa-file-excel-o';
-      case 'ppt' || 'pptx':
+      case 'xls':
+      case 'xlsx':
+        return'fa fa-file-excel-o';
+      case 'ppt':
+      case 'pptx':
         return 'fa fa-file-powerpoint-o';
-      case 'png' || 'jpg' || 'jpeg' || 'svg' || 'gif':
-        return 'fa fa-file-image-o';
+      case 'png':
+      case 'jpg':
+      case 'jpeg':
+      case 'svg':
+      case 'gif':
+        return'fa fa-file-image-o';
       default:
         return 'fa fa-file-text-o';
     }
+  }
+
+  checkSelected(arr: Array<any>, path) {
+    for(let i = 0; i < arr.length; i++) {
+      if(path === arr[i]) {
+        return i+1;
+      }
+    }
+    return false;
+  }
+
+  addSelectItem(arr: Array<any>, path) {
+    let res = this.checkSelected(arr, path);
+    res ? arr.splice(res-1, 1) : arr.push(path);
+  }
+
+  delItem(path) {
+    this._dataService.delDat(path)
+      .subscribe(data => {
+        this.pullDocs();
+        this.pullImgs();
+      });
+  }
+
+  downloadFiles(arr) {
+    this._dataService.downloadDat(arr)
+      .subscribe();
+  }
+
+  delItems(arr) {
+    this._dataService.delDats(arr)
+      .subscribe(data => {
+        console.log(data);
+        this.pullDocs();
+        this.pullImgs();
+      });
   }
 }

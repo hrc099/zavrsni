@@ -1,4 +1,20 @@
 <div>
+	<div [style.display]="rollbackSadrzajHidden?'none':'block'" class="bottom-info">
+		<div class="container">
+			<span>
+				Izbrisali ste članak {{ backupClanak.name }}.
+			</span>
+			<button class="button" (click)="rollbackSadrzaj()">
+				Vrati člana 
+				<i class="fa fa-undo fa-fw" aria-hidden="true"></i>
+			</button>
+			<button class="button" (click)="rollbackSadrzajHidden=true">
+				OK 
+				<i class="fa fa-check fa-fw" aria-hidden="true"></i>
+			</button>
+			<button class="delete" (click)="rollbackSadrzajHidden=true"></button>
+		</div>
+	</div>
   <div class="columns">
   	<div class="column is-half">
   		  <h3 class="is-size-3">Uređivanje postojećih članaka</h3>
@@ -65,13 +81,16 @@
 						</ul>
 					</div>
 					<br>
-					<div class="imgList" *ngIf="activeTabTrenutni===1">
+					<div class="chooseImgList" *ngIf="activeTabTrenutni===1">
 						<a *ngFor="let img of savedImgs" (click)="selectImgFromSrv('trenutni', img)">
 							<figure>
 								<img src="uploads/img/{{img}}">
 								<figcaption>
 									{{ img.length<15?img:img.slice(0,12)+'...' }}
 								</figcaption>
+								<span>
+									{{ img }}
+								</span>
 							</figure>
 						</a>
 					</div>
@@ -171,13 +190,16 @@
 					</ul>
 				</div>
 				<br>
-				<div class="imgList" *ngIf="activeTab===1">
+				<div class="chooseImgList" *ngIf="activeTab===1">
 					<a *ngFor="let img of savedImgs" (click)="selectImgFromSrv('novi', img)">
 						<figure>
 							<img src="uploads/img/{{img}}">
 							<figcaption>
 								{{ img.length<15?img:img.slice(0,12)+'...' }}
 							</figcaption>
+							<span>
+								{{ img }}
+							</span>
 						</figure>
 					</a>
 				</div>
