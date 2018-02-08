@@ -5,7 +5,7 @@ const path = require('path');
 const router = express.Router();
 const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
-var archiver = require('archiver');
+var EasyZip = require('easy-zip').EasyZip;
 
 // Set Storage Engine
 const storage = multer.diskStorage({
@@ -52,7 +52,7 @@ const uploadArr = multer({
     }
 });
 
-// Connect
+// Connect to DB
 const connection = (closure) => {
     return MongoClient.connect('mongodb://admin2:admin2@ds157521.mlab.com:57521/usgz', (err, db) => {
         if (err) return console.log(err);
@@ -74,24 +74,6 @@ let response = {
     data: [],
     message: null
 };
-
-// Datoteka za zip
-var output = fs.createWriteStream('uploads/toDl.zip');
-var archive = archiver('zip', {
-    zlib: { level: 9 } // Sets the compression level.
-});
-// This event is fired when the data source is drained no matter what was the data source.
-// It is not part of this library but rather from the NodeJS Stream API.
-// @see: https://nodejs.org/api/stream.html#stream_event_end
-output.on('end', function() {
-    console.log('Data has been drained');
-});
-// good practice to catch this error explicitly
-archive.on('error', function(err) {
-    throw err;
-  });
-// pipe archive data to the file
-archive.pipe(output);
 
 // Get users
 router.get('/clanovi', (req, res) => {
@@ -333,10 +315,18 @@ router.post('/deleteDat', (req, res) => {
 
 router.post('/downloadDat', (req, res) => {
     let pathList = req.body;
-    pathList.forEach(path => {
-        archive.append(fs.createReadStream(path), { name: path.split('/').pop() });
+    let objArr = [];
+    pathList.forEach(file => {
+        //archive.append(fs.createReadStream(file), { name: file.split('/').pop() });
+        objArr.push({ source: file, target: file.split('/').pop() });
     });
-    archive.finalize();
+    let zip = new EasyZip();
+    zip.batchAdd(objArr, () => {
+        //zip.writeToResponse(res, 'dl.zip');
+        zip.writeToFile('uploads/dl.zip');
+        response.data = 'uploads/dl.zip';
+        res.json(response);
+    });
 });
 
 router.post('/deleteDats', (req, res) => {

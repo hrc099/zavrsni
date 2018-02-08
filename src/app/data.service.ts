@@ -13,6 +13,11 @@ export class DataService {
 
   constructor(private _http: Http) { }
 
+  logoutUser() {
+    return this._http.get("/logout")
+    .map(result => this.result = result);
+  }
+
   getUsers() {
     return this._http.get("/api/clanovi")
       .map(result => this.result = result.json().data);
@@ -80,7 +85,11 @@ export class DataService {
   }
 
   downloadDat(arr) {
-    return this._http.post("/api/downloadDat", arr);
+    let headers = new Headers();
+    headers.append('responseType', 'arraybuffer');
+    return this._http.post("/api/downloadDat", arr)
+      .map(res => res.json().data);
+      //.map(res => new Blob([res], {type: 'application/zip'}));
   }
 
   delDats(arr) {

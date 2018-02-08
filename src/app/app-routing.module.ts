@@ -9,6 +9,7 @@ const appRoutes: Routes = [
   { path: 'clanovi', component: ClanoviFormaComponent },
   { path: 'sadrzaj', component: SadrzajFormaComponent },
   { path: 'datoteke', component: DatotekeFormaComponent },
+  { path: 'admin',   redirectTo: 'clanovi', pathMatch: 'full' },
   { path: '',   redirectTo: 'clanovi', pathMatch: 'full' }
 ];
  

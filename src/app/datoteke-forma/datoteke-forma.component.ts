@@ -23,6 +23,9 @@ export class DatotekeFormaComponent implements OnInit {
   selectedDocs: Array<any> = [];
   selectedImgs: Array<any> = [];
 
+  // Zip ready
+  downloadable: boolean = false;
+
   err: string;
 
   constructor(private _dataService: DataService) { }
@@ -158,7 +161,15 @@ export class DatotekeFormaComponent implements OnInit {
 
   downloadFiles(arr) {
     this._dataService.downloadDat(arr)
-      .subscribe();
+      .subscribe(res => {
+        console.log(res);
+        let link = document.createElement('a');
+        link.href = res;
+        link.download = 'dl.zip';
+        link.click();
+        document.removeChild(link);
+        //this.downloadable = true;
+      });
   }
 
   delItems(arr) {

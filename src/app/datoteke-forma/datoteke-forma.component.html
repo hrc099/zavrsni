@@ -97,12 +97,12 @@
 				{{ selDoc }}
 			</span>
 			<br>
-			<button class="button">
+			<a class="button" (click)="downloadFiles(selectedDocs)">
 				<i class="fa fa-download" aria-hidden="true"></i>
 				<span>
 					Preuzmi
 				</span>
-			</button>
+			</a>
 			<button (click)="delItems(selectedDocs)" class="button">
 				<i class="fa fa-trash" aria-hidden="true"></i>
 				<span>
@@ -189,7 +189,7 @@
 				{{ selImg }}
 			</span>
 			<br>
-			<a class="button" (click)="downloadFiles(selectedImgs)" href="uploads/toDl.zip" download>
+			<a class="button" (click)="downloadFiles(selectedImgs)">
 				<i class="fa fa-download" aria-hidden="true"></i>
 				<span>
 					Preuzmi

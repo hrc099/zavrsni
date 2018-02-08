@@ -42,6 +42,7 @@ var appRoutes = [
     { path: 'clanovi', component: __WEBPACK_IMPORTED_MODULE_2__clanovi_forma_clanovi_forma_component__["a" /* ClanoviFormaComponent */] },
     { path: 'sadrzaj', component: __WEBPACK_IMPORTED_MODULE_3__sadrzaj_forma_sadrzaj_forma_component__["a" /* SadrzajFormaComponent */] },
     { path: 'datoteke', component: __WEBPACK_IMPORTED_MODULE_4__datoteke_forma_datoteke_forma_component__["a" /* DatotekeFormaComponent */] },
+    { path: 'admin', redirectTo: 'clanovi', pathMatch: 'full' },
     { path: '', redirectTo: 'clanovi', pathMatch: 'full' }
 ];
 var AppRoutingModule = (function () {
@@ -85,7 +86,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar is-info\" role=\"navigation\" aria-label=\"main navigation\">\n\t<div class=\"container\">\n\t\t<div class=\"navbar-brand\">\n\t\t\t<a class=\"navbar-item\" routerLink=\"/\">\n\t\t\t\t<img src=\"uploads/logo.svg\" alt=\"Udruga studenata grada Zaprešića\">\n\t\t\t</a>\n\t\t\t<button class=\"button navbar-burger\">\n\t\t\t\t\t<span></span>\n\t\t\t\t\t<span></span>\n\t\t\t\t\t<span></span>\n\t\t\t\t</button>\n\t\t</div>\n\t\t<div class=\"navbar-menu\">\n\t\t\t<div class=\"navbar-start\">\n\t\t\t\t<a class=\"navbar-item\" routerLink=\"/clanovi\" routerLinkActive=\"routerlink-active\">Članovi</a>\n\t\t\t\t<a class=\"navbar-item\" routerLink=\"/sadrzaj\" routerLinkActive=\"routerlink-active\">Sadržaj</a>\n\t\t\t\t<a class=\"navbar-item\" routerLink=\"/datoteke\" routerLinkActive=\"routerlink-active\">Datoteke</a>\n\t\t\t</div>\n\t\t\t<div class=\"navbar-end\"></div>\n\t\t</div>\n\t</div>\n</nav>\n<br>\n<div class=\"container\">\n\t<router-outlet></router-outlet>\n</div>\n<br>\n<footer class=\"footer\">\n\t<div class=\"container\">\n\t\t<h3 class=\"is-size-3\">\n\t\t\tUpotreba MEAN stack aplikacije u održavanju stranice i administriranju udruge\n\t\t</h3>\n\t\t<span>Hrvoje Husnjak 2018.</span>\n\t</div>\n</footer>\n\n<script type=\"text/javascript\">\n\tdocument.addEventListener('DOMContentLoaded', function () {\n\n\t  // Get all \"navbar-burger\" elements\n\t  var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);\n\n\t  // Check if there are any navbar burgers\n\t  if ($navbarBurgers.length > 0) {\n\n\t    // Add a click event on each of them\n\t    $navbarBurgers.forEach(function ($el) {\n\t      $el.addEventListener('click', function () {\n\n\t        // Get the target from the \"data-target\" attribute\n\t        var target = $el.dataset.target;\n\t        var $target = document.getElementById(target);\n\n\t        // Toggle the class on both the \"navbar-burger\" and the \"navbar-menu\"\n\t        $el.classList.toggle('is-active');\n\t        $target.classList.toggle('is-active');\n\n\t      });\n\t    });\n\t  }\n\n\t});\n</script>"
+module.exports = "<nav class=\"navbar is-info\" role=\"navigation\" aria-label=\"main navigation\">\n\t<div class=\"container\">\n\t\t<div class=\"navbar-brand\">\n\t\t\t<a class=\"navbar-item\" routerLink=\"/\">\n\t\t\t\t<img src=\"uploads/logo.svg\" alt=\"Udruga studenata grada Zaprešića\">\n\t\t\t</a>\n\t\t\t<button class=\"button navbar-burger\">\n\t\t\t\t\t<span></span>\n\t\t\t\t\t<span></span>\n\t\t\t\t\t<span></span>\n\t\t\t\t</button>\n\t\t</div>\n\t\t<div class=\"navbar-menu\">\n\t\t\t<div class=\"navbar-start\">\n\t\t\t\t<a class=\"navbar-item\" routerLink=\"/clanovi\" routerLinkActive=\"routerlink-active\">Članovi</a>\n\t\t\t\t<a class=\"navbar-item\" routerLink=\"/sadrzaj\" routerLinkActive=\"routerlink-active\">Sadržaj</a>\n\t\t\t\t<a class=\"navbar-item\" routerLink=\"/datoteke\" routerLinkActive=\"routerlink-active\">Datoteke</a>\n\t\t\t</div>\n\t\t\t<div class=\"navbar-end\">\n\t\t\t\t<a class=\"navbar-item\" (click)=\"logoutUser()\">Logout</a>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</nav>\n<br>\n<div class=\"container\">\n\t<router-outlet></router-outlet>\n</div>\n<br>\n<footer class=\"footer\">\n\t<div class=\"container\">\n\t\t<h3 class=\"is-size-3\">\n\t\t\tUpotreba MEAN stack aplikacije u održavanju stranice i administriranju udruge\n\t\t</h3>\n\t\t<span>Hrvoje Husnjak 2018.</span>\n\t</div>\n</footer>\n\n<script type=\"text/javascript\">\n\tdocument.addEventListener('DOMContentLoaded', function () {\n\n\t  // Get all \"navbar-burger\" elements\n\t  var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);\n\n\t  // Check if there are any navbar burgers\n\t  if ($navbarBurgers.length > 0) {\n\n\t    // Add a click event on each of them\n\t    $navbarBurgers.forEach(function ($el) {\n\t      $el.addEventListener('click', function () {\n\n\t        // Get the target from the \"data-target\" attribute\n\t        var target = $el.dataset.target;\n\t        var $target = document.getElementById(target);\n\n\t        // Toggle the class on both the \"navbar-burger\" and the \"navbar-menu\"\n\t        $el.classList.toggle('is-active');\n\t        $target.classList.toggle('is-active');\n\n\t      });\n\t    });\n\t  }\n\n\t});\n</script>"
 
 /***/ }),
 
@@ -95,16 +96,26 @@ module.exports = "<nav class=\"navbar is-info\" role=\"navigation\" aria-label=\
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__data_service__ = __webpack_require__("../../../../../src/app/data.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
 
 var AppComponent = (function () {
-    function AppComponent() {
+    function AppComponent(_dataService) {
+        this._dataService = _dataService;
     }
+    AppComponent.prototype.logoutUser = function () {
+        this._dataService.logoutUser()
+            .subscribe(function (res) { return window.location.href = res.url; });
+    };
     return AppComponent;
 }());
 AppComponent = __decorate([
@@ -112,9 +123,11 @@ AppComponent = __decorate([
         selector: 'app-root',
         template: __webpack_require__("../../../../../src/app/app.component.html"),
         styles: [__webpack_require__("../../../../../src/app/app.component.css")]
-    })
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__data_service__["a" /* DataService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__data_service__["a" /* DataService */]) === "function" && _a || Object])
 ], AppComponent);
 
+var _a;
 //# sourceMappingURL=app.component.js.map
 
 /***/ }),
@@ -171,7 +184,7 @@ AppModule = __decorate([
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
-            __WEBPACK_IMPORTED_MODULE_3__angular_http__["b" /* HttpModule */],
+            __WEBPACK_IMPORTED_MODULE_3__angular_http__["c" /* HttpModule */],
             __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormsModule */],
             __WEBPACK_IMPORTED_MODULE_5__app_routing_module__["a" /* AppRoutingModule */]
         ],
@@ -413,6 +426,11 @@ var DataService = (function () {
     function DataService(_http) {
         this._http = _http;
     }
+    DataService.prototype.logoutUser = function () {
+        var _this = this;
+        return this._http.get("/logout")
+            .map(function (result) { return _this.result = result; });
+    };
     DataService.prototype.getUsers = function () {
         var _this = this;
         return this._http.get("/api/clanovi")
@@ -467,7 +485,11 @@ var DataService = (function () {
             .map(function (res) { return res.json().data; });
     };
     DataService.prototype.downloadDat = function (arr) {
-        return this._http.post("/api/downloadDat", arr);
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
+        headers.append('responseType', 'arraybuffer');
+        return this._http.post("/api/downloadDat", arr)
+            .map(function (res) { return res.json().data; });
+        //.map(res => new Blob([res], {type: 'application/zip'}));
     };
     DataService.prototype.delDats = function (arr) {
         return this._http.post("/api/deleteDats", arr)
@@ -477,7 +499,7 @@ var DataService = (function () {
 }());
 DataService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object])
 ], DataService);
 
 var _a;
@@ -506,7 +528,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/datoteke-forma/datoteke-forma.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"card\">\n\t<header class=\"card-header\">\n    <p class=\"card-header-title\">\n      Upravljanje datotekama na serveru\n\t\t</p>\n\t</header>\n\t<div class=\"card-content\">\n\t\t<div class=\"content\">\n\t\t\t\tNa serveru su dva repozitorija, doc za dokumente i img za slike. img direktorij služi \n\t\t\t\tkako bi u njemu bile slike koje se mogu dodijeliti člancima/sadržajima na USGZ stranici. doc služi kao \n\t\t\t\trepozitorij za pohranu dokumenata poput statuta i sl.\n\t\t</div>\n  \t</div>\n</div>\n<span *ngIf=\"err\" class=\"bottom-info red-alert\">\n\t{{ err }}\n</span>\n<br>\n<h3 class=\"is-size-3\">doc repozitorij</h3>\n<div class=\"columns\">\n\t<div class=\"column is-half\">\n\t\t<span [style.display]=\"error?'block':'none'\" class=\"red-alert\">\n\t\t\t{{ error }}\n\t\t</span>\n\t\t<br>\n\t\t<form (ngSubmit)=\"uploadDat()\" #datForm=\"ngForm\" enctype=\"multipart/form-data\">\n\t\t\t<div class=\"file has-name\">\n\t\t\t\t<label class=\"file-label\">\n\t\t\t\t\t<input (change)=\"fileChangeEvent($event)\" class=\"file-input\" type=\"file\" #fileInput name=\"datoteka\" multiple=\"multiple\">\n\t\t\t\t\t<span class=\"file-cta\">\n\t\t\t\t\t\t<span class=\"file-icon\">\n\t\t\t\t\t\t\t<i class=\"fa fa-upload\"></i>\n\t\t\t\t\t\t</span>\n\t\t\t\t\t\t<span class=\"file-label\">\n\t\t\t\t\t\t\tIzaberi dokumente za upload…\n\t\t\t\t\t\t</span>\n\t\t\t\t\t</span>\n\t\t\t\t</label>\n\t\t\t</div>\n\t\t\t<br>\n\t\t\t<small>\n\t\t\t\tNajveći broj datoteka u jednom prijenosu: 10\n\t\t\t\t<br>\n\t\t\t\tNajveća veličina pojedinačne datoteke: 100MB\n\t\t\t\t<br>\n\t\t\t\tDopušteni formati: jpg | jpeg | png | gif | svg | doc | docx | xls | xlsx | ppt | pptx | pdf | txt\n\t\t\t</small>\n\t\t\t<br><br>\n\t\t\t<button type=\"submit\" class=\"button is-info\" [disabled]=\"!(filesToUpload.length>0) || !checkFileSizes(filesToUpload)\">Učitaj datoteke</button>\n\t\t</form>\n\t\t<br>\n\t\t<span>\n\t\t\tBroj odabranih datoteka za upload: \n\t\t\t<span [ngClass]=\"{'red-alert':filesToUpload.length>10}\">\n\t\t\t\t{{ filesToUpload.length }}\n\t\t\t</span>\n\t\t</span>\n\t\t<br>\n\t\t<div class=\"box\" *ngIf=\"filesToUpload.length > 0\">\n\t\t\t<ul>\n\t\t\t\t<li *ngFor=\"let dat of filesToUpload\">\n\t\t\t\t\t{{ dat.name }}\n\t\t\t\t\t<span [ngClass]=\"{'red-alert':dat.size>100000000}\">\n\t\t\t\t\t\t{{ dat.size/1000000 | number:'1.1-2' }}MB\n\t\t\t\t\t</span>\n\t\t\t\t</li>\n\t\t\t</ul>\n\t\t</div>\n\t</div>\n\t<div class=\"column is-half\">\n\t\t<b>Upravljanje dokumentima na serveru</b>\n\t\t<br><br>\n\t\t<div class=\"itemList docList\">\n\t\t\t<div *ngFor=\"let doc of savedDocs\">\n\t\t\t\t<a (click)=\"addSelectItem(this.selectedDocs, 'uploads/doc/'+doc)\">\n\t\t\t\t\t<figure [ngClass]=\"{'activeSelect': checkSelected(this.selectedDocs, 'uploads/doc/'+doc)}\">\n\t\t\t\t\t\t<i [className]=\"setImgByExt(doc)\"></i>\n\t\t\t\t\t</figure>\n\t\t\t\t</a>\n\t\t\t\t<button (click)=\"delItem('uploads/doc/'+doc)\" class=\"delete\"></button>\n\t\t\t\t<figcaption>\n\t\t\t\t\t<span>\n\t\t\t\t\t\t{{ doc.length<18?doc:doc.slice(0,15)+'...' }}\n\t\t\t\t\t</span>\n\t\t\t\t</figcaption>\n\t\t\t\t<span>\n\t\t\t\t\t{{ doc }}\n\t\t\t\t</span>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"box\" *ngIf=\"selectedDocs.length > 0\">\n\t\t\t<span>\n\t\t\t\tOznačene datoteke:\n\t\t\t</span>\n\t\t\t<br>\n\t\t\t<span *ngFor=\"let selDoc of selectedDocs\">\n\t\t\t\t{{ selDoc }}\n\t\t\t</span>\n\t\t\t<br>\n\t\t\t<button class=\"button\">\n\t\t\t\t<i class=\"fa fa-download\" aria-hidden=\"true\"></i>\n\t\t\t\t<span>\n\t\t\t\t\tPreuzmi\n\t\t\t\t</span>\n\t\t\t</button>\n\t\t\t<button (click)=\"delItems(selectedDocs)\" class=\"button\">\n\t\t\t\t<i class=\"fa fa-trash\" aria-hidden=\"true\"></i>\n\t\t\t\t<span>\n\t\t\t\t\tIzbriši\n\t\t\t\t</span>\n\t\t\t</button>\n\t\t</div>\n\t</div>\n</div>\n<hr>\n<h3 class=\"is-size-3\">img repozitorij</h3>\n<div class=\"columns\">\n\t<div class=\"column is-half\">\n\t\t<br>\n\t\t<form (ngSubmit)=\"uploadImgs()\" #imgsForm=\"ngForm\" enctype=\"multipart/form-data\">\n\t\t\t<div class=\"file has-name\">\n\t\t\t\t<label class=\"file-label\">\n\t\t\t\t\t<input (change)=\"imgChangeEvent($event)\" class=\"file-input\" type=\"file\" #imgInput name=\"slika\" multiple=\"multiple\" accept=\"application/x-zip-compressed,image/*\">\n\t\t\t\t\t<span class=\"file-cta\">\n\t\t\t\t\t\t<span class=\"file-icon\">\n\t\t\t\t\t\t\t<i class=\"fa fa-upload\"></i>\n\t\t\t\t\t\t</span>\n\t\t\t\t\t\t<span class=\"file-label\">\n\t\t\t\t\t\t\tIzaberi slike za upload…\n\t\t\t\t\t\t</span>\n\t\t\t\t\t</span>\n\t\t\t\t</label>\n\t\t\t</div>\n\t\t\t<br>\n\t\t\t<small>\n\t\t\t\tNajveći broj datoteka u jednom prijenosu: 10\n\t\t\t\t<br>\n\t\t\t\tDopušteni formati: jpg | jpeg | png | gif | svg\n\t\t\t</small>\n\t\t\t<br><br>\n\t\t\t<button type=\"submit\" class=\"button is-info\" [disabled]=\"!imgsToUpload.length>0\">Učitaj datoteke</button>\n\t\t</form>\n\t\t<br>\n\t\t<span>\n\t\t\tBroj odabranih datoteka za upload: \n\t\t\t<span [ngClass]=\"{'red-alert':imgsToUpload.length>10}\">\n\t\t\t\t{{ imgsToUpload.length || 0 }}\n\t\t\t</span>\n\t\t</span>\n\t\t<br>\n\t\t<div class=\"box\" *ngIf=\"imgsToUpload.length > 0\">\n\t\t\t<ul>\n\t\t\t\t<li *ngFor=\"let dat of imgsToUpload\">\n\t\t\t\t\t{{ dat.name }}\n\t\t\t\t\t<span [ngClass]=\"{'red-alert':dat.size>100000000}\">\n\t\t\t\t\t\t{{ dat.size/1000000 | number:'1.1-2' }}MB\n\t\t\t\t\t</span>\n\t\t\t\t</li>\n\t\t\t</ul>\n\t\t</div>\n\t</div>\n\t<div class=\"is-half\">\n\t\t<b>Upravljanje slikama na serveru</b>\n\t\t<br><br>\n\t\t<div class=\"itemList imgList\">\n\t\t\t<div *ngFor=\"let img of savedImgs\">\n\t\t\t\t<a (click)=\"addSelectItem(this.selectedImgs, 'uploads/img/'+img)\">\n\t\t\t\t\t<figure [ngClass]=\"{'activeSelect': checkSelected(this.selectedImgs, 'uploads/img/'+img)}\">\n\t\t\t\t\t\t<img src=\"uploads/img/{{img}}\">\n\t\t\t\t\t</figure>\n\t\t\t\t</a>\n\t\t\t\t<button (click)=\"delItem('uploads/img/'+img)\" class=\"delete\"></button>\n\t\t\t\t<figcaption>\n\t\t\t\t\t<span>\n\t\t\t\t\t\t{{ img.length<18?img:img.slice(0,15)+'...' }}\n\t\t\t\t\t</span>\n\t\t\t\t</figcaption>\n\t\t\t\t<span>\n\t\t\t\t\t{{ img }}\n\t\t\t\t</span>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"box\" *ngIf=\"selectedImgs.length > 0\">\n\t\t\t<span>\n\t\t\t\tOznačene datoteke:\n\t\t\t</span>\n\t\t\t<br>\n\t\t\t<span *ngFor=\"let selImg of selectedImgs\">\n\t\t\t\t{{ selImg }}\n\t\t\t</span>\n\t\t\t<br>\n\t\t\t<a class=\"button\" (click)=\"downloadFiles(selectedImgs)\" href=\"uploads/toDl.zip\" download>\n\t\t\t\t<i class=\"fa fa-download\" aria-hidden=\"true\"></i>\n\t\t\t\t<span>\n\t\t\t\t\tPreuzmi\n\t\t\t\t</span>\n\t\t\t</a>\n\t\t\t<button (click)=\"delItems(selectedImgs)\" class=\"button\">\n\t\t\t\t<i class=\"fa fa-trash\" aria-hidden=\"true\"></i>\n\t\t\t\t<span>\n\t\t\t\t\tIzbriši\n\t\t\t\t</span>\n\t\t\t</button>\n\t\t</div>\n\t</div>\n</div>"
+module.exports = "<div class=\"card\">\n\t<header class=\"card-header\">\n    <p class=\"card-header-title\">\n      Upravljanje datotekama na serveru\n\t\t</p>\n\t</header>\n\t<div class=\"card-content\">\n\t\t<div class=\"content\">\n\t\t\t\tNa serveru su dva repozitorija, doc za dokumente i img za slike. img direktorij služi \n\t\t\t\tkako bi u njemu bile slike koje se mogu dodijeliti člancima/sadržajima na USGZ stranici. doc služi kao \n\t\t\t\trepozitorij za pohranu dokumenata poput statuta i sl.\n\t\t</div>\n  \t</div>\n</div>\n<span *ngIf=\"err\" class=\"bottom-info red-alert\">\n\t{{ err }}\n</span>\n<br>\n<h3 class=\"is-size-3\">doc repozitorij</h3>\n<div class=\"columns\">\n\t<div class=\"column is-half\">\n\t\t<span [style.display]=\"error?'block':'none'\" class=\"red-alert\">\n\t\t\t{{ error }}\n\t\t</span>\n\t\t<br>\n\t\t<form (ngSubmit)=\"uploadDat()\" #datForm=\"ngForm\" enctype=\"multipart/form-data\">\n\t\t\t<div class=\"file has-name\">\n\t\t\t\t<label class=\"file-label\">\n\t\t\t\t\t<input (change)=\"fileChangeEvent($event)\" class=\"file-input\" type=\"file\" #fileInput name=\"datoteka\" multiple=\"multiple\">\n\t\t\t\t\t<span class=\"file-cta\">\n\t\t\t\t\t\t<span class=\"file-icon\">\n\t\t\t\t\t\t\t<i class=\"fa fa-upload\"></i>\n\t\t\t\t\t\t</span>\n\t\t\t\t\t\t<span class=\"file-label\">\n\t\t\t\t\t\t\tIzaberi dokumente za upload…\n\t\t\t\t\t\t</span>\n\t\t\t\t\t</span>\n\t\t\t\t</label>\n\t\t\t</div>\n\t\t\t<br>\n\t\t\t<small>\n\t\t\t\tNajveći broj datoteka u jednom prijenosu: 10\n\t\t\t\t<br>\n\t\t\t\tNajveća veličina pojedinačne datoteke: 100MB\n\t\t\t\t<br>\n\t\t\t\tDopušteni formati: jpg | jpeg | png | gif | svg | doc | docx | xls | xlsx | ppt | pptx | pdf | txt\n\t\t\t</small>\n\t\t\t<br><br>\n\t\t\t<button type=\"submit\" class=\"button is-info\" [disabled]=\"!(filesToUpload.length>0) || !checkFileSizes(filesToUpload)\">Učitaj datoteke</button>\n\t\t</form>\n\t\t<br>\n\t\t<span>\n\t\t\tBroj odabranih datoteka za upload: \n\t\t\t<span [ngClass]=\"{'red-alert':filesToUpload.length>10}\">\n\t\t\t\t{{ filesToUpload.length }}\n\t\t\t</span>\n\t\t</span>\n\t\t<br>\n\t\t<div class=\"box\" *ngIf=\"filesToUpload.length > 0\">\n\t\t\t<ul>\n\t\t\t\t<li *ngFor=\"let dat of filesToUpload\">\n\t\t\t\t\t{{ dat.name }}\n\t\t\t\t\t<span [ngClass]=\"{'red-alert':dat.size>100000000}\">\n\t\t\t\t\t\t{{ dat.size/1000000 | number:'1.1-2' }}MB\n\t\t\t\t\t</span>\n\t\t\t\t</li>\n\t\t\t</ul>\n\t\t</div>\n\t</div>\n\t<div class=\"column is-half\">\n\t\t<b>Upravljanje dokumentima na serveru</b>\n\t\t<br><br>\n\t\t<div class=\"itemList docList\">\n\t\t\t<div *ngFor=\"let doc of savedDocs\">\n\t\t\t\t<a (click)=\"addSelectItem(this.selectedDocs, 'uploads/doc/'+doc)\">\n\t\t\t\t\t<figure [ngClass]=\"{'activeSelect': checkSelected(this.selectedDocs, 'uploads/doc/'+doc)}\">\n\t\t\t\t\t\t<i [className]=\"setImgByExt(doc)\"></i>\n\t\t\t\t\t</figure>\n\t\t\t\t</a>\n\t\t\t\t<button (click)=\"delItem('uploads/doc/'+doc)\" class=\"delete\"></button>\n\t\t\t\t<figcaption>\n\t\t\t\t\t<span>\n\t\t\t\t\t\t{{ doc.length<18?doc:doc.slice(0,15)+'...' }}\n\t\t\t\t\t</span>\n\t\t\t\t</figcaption>\n\t\t\t\t<span>\n\t\t\t\t\t{{ doc }}\n\t\t\t\t</span>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"box\" *ngIf=\"selectedDocs.length > 0\">\n\t\t\t<span>\n\t\t\t\tOznačene datoteke:\n\t\t\t</span>\n\t\t\t<br>\n\t\t\t<span *ngFor=\"let selDoc of selectedDocs\">\n\t\t\t\t{{ selDoc }}\n\t\t\t</span>\n\t\t\t<br>\n\t\t\t<a class=\"button\" (click)=\"downloadFiles(selectedDocs)\">\n\t\t\t\t<i class=\"fa fa-download\" aria-hidden=\"true\"></i>\n\t\t\t\t<span>\n\t\t\t\t\tPreuzmi\n\t\t\t\t</span>\n\t\t\t</a>\n\t\t\t<button (click)=\"delItems(selectedDocs)\" class=\"button\">\n\t\t\t\t<i class=\"fa fa-trash\" aria-hidden=\"true\"></i>\n\t\t\t\t<span>\n\t\t\t\t\tIzbriši\n\t\t\t\t</span>\n\t\t\t</button>\n\t\t</div>\n\t</div>\n</div>\n<hr>\n<h3 class=\"is-size-3\">img repozitorij</h3>\n<div class=\"columns\">\n\t<div class=\"column is-half\">\n\t\t<br>\n\t\t<form (ngSubmit)=\"uploadImgs()\" #imgsForm=\"ngForm\" enctype=\"multipart/form-data\">\n\t\t\t<div class=\"file has-name\">\n\t\t\t\t<label class=\"file-label\">\n\t\t\t\t\t<input (change)=\"imgChangeEvent($event)\" class=\"file-input\" type=\"file\" #imgInput name=\"slika\" multiple=\"multiple\" accept=\"application/x-zip-compressed,image/*\">\n\t\t\t\t\t<span class=\"file-cta\">\n\t\t\t\t\t\t<span class=\"file-icon\">\n\t\t\t\t\t\t\t<i class=\"fa fa-upload\"></i>\n\t\t\t\t\t\t</span>\n\t\t\t\t\t\t<span class=\"file-label\">\n\t\t\t\t\t\t\tIzaberi slike za upload…\n\t\t\t\t\t\t</span>\n\t\t\t\t\t</span>\n\t\t\t\t</label>\n\t\t\t</div>\n\t\t\t<br>\n\t\t\t<small>\n\t\t\t\tNajveći broj datoteka u jednom prijenosu: 10\n\t\t\t\t<br>\n\t\t\t\tDopušteni formati: jpg | jpeg | png | gif | svg\n\t\t\t</small>\n\t\t\t<br><br>\n\t\t\t<button type=\"submit\" class=\"button is-info\" [disabled]=\"!imgsToUpload.length>0\">Učitaj datoteke</button>\n\t\t</form>\n\t\t<br>\n\t\t<span>\n\t\t\tBroj odabranih datoteka za upload: \n\t\t\t<span [ngClass]=\"{'red-alert':imgsToUpload.length>10}\">\n\t\t\t\t{{ imgsToUpload.length || 0 }}\n\t\t\t</span>\n\t\t</span>\n\t\t<br>\n\t\t<div class=\"box\" *ngIf=\"imgsToUpload.length > 0\">\n\t\t\t<ul>\n\t\t\t\t<li *ngFor=\"let dat of imgsToUpload\">\n\t\t\t\t\t{{ dat.name }}\n\t\t\t\t\t<span [ngClass]=\"{'red-alert':dat.size>100000000}\">\n\t\t\t\t\t\t{{ dat.size/1000000 | number:'1.1-2' }}MB\n\t\t\t\t\t</span>\n\t\t\t\t</li>\n\t\t\t</ul>\n\t\t</div>\n\t</div>\n\t<div class=\"is-half\">\n\t\t<b>Upravljanje slikama na serveru</b>\n\t\t<br><br>\n\t\t<div class=\"itemList imgList\">\n\t\t\t<div *ngFor=\"let img of savedImgs\">\n\t\t\t\t<a (click)=\"addSelectItem(this.selectedImgs, 'uploads/img/'+img)\">\n\t\t\t\t\t<figure [ngClass]=\"{'activeSelect': checkSelected(this.selectedImgs, 'uploads/img/'+img)}\">\n\t\t\t\t\t\t<img src=\"uploads/img/{{img}}\">\n\t\t\t\t\t</figure>\n\t\t\t\t</a>\n\t\t\t\t<button (click)=\"delItem('uploads/img/'+img)\" class=\"delete\"></button>\n\t\t\t\t<figcaption>\n\t\t\t\t\t<span>\n\t\t\t\t\t\t{{ img.length<18?img:img.slice(0,15)+'...' }}\n\t\t\t\t\t</span>\n\t\t\t\t</figcaption>\n\t\t\t\t<span>\n\t\t\t\t\t{{ img }}\n\t\t\t\t</span>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"box\" *ngIf=\"selectedImgs.length > 0\">\n\t\t\t<span>\n\t\t\t\tOznačene datoteke:\n\t\t\t</span>\n\t\t\t<br>\n\t\t\t<span *ngFor=\"let selImg of selectedImgs\">\n\t\t\t\t{{ selImg }}\n\t\t\t</span>\n\t\t\t<br>\n\t\t\t<a class=\"button\" (click)=\"downloadFiles(selectedImgs)\">\n\t\t\t\t<i class=\"fa fa-download\" aria-hidden=\"true\"></i>\n\t\t\t\t<span>\n\t\t\t\t\tPreuzmi\n\t\t\t\t</span>\n\t\t\t</a>\n\t\t\t<button (click)=\"delItems(selectedImgs)\" class=\"button\">\n\t\t\t\t<i class=\"fa fa-trash\" aria-hidden=\"true\"></i>\n\t\t\t\t<span>\n\t\t\t\t\tIzbriši\n\t\t\t\t</span>\n\t\t\t</button>\n\t\t</div>\n\t</div>\n</div>"
 
 /***/ }),
 
@@ -537,6 +559,8 @@ var DatotekeFormaComponent = (function () {
         // Selected items
         this.selectedDocs = [];
         this.selectedImgs = [];
+        // Zip ready
+        this.downloadable = false;
     }
     DatotekeFormaComponent.prototype.ngOnInit = function () {
         this.pullDocs();
@@ -648,7 +672,15 @@ var DatotekeFormaComponent = (function () {
     };
     DatotekeFormaComponent.prototype.downloadFiles = function (arr) {
         this._dataService.downloadDat(arr)
-            .subscribe();
+            .subscribe(function (res) {
+            console.log(res);
+            var link = document.createElement('a');
+            link.href = res;
+            link.download = 'dl.zip';
+            link.click();
+            document.removeChild(link);
+            //this.downloadable = true;
+        });
     };
     DatotekeFormaComponent.prototype.delItems = function (arr) {
         var _this = this;
