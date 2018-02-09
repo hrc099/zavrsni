@@ -77,6 +77,9 @@
 						<i [className]="setImgByExt(doc)"></i>
 					</figure>
 				</a>
+				<a href="uploads/doc/{{doc}}" class="button download-btn" download>
+					<i class="fa fa-download"></i>
+				</a>
 				<button (click)="delItem('uploads/doc/'+doc)" class="delete"></button>
 				<figcaption>
 					<span>
@@ -168,6 +171,9 @@
 					<figure [ngClass]="{'activeSelect': checkSelected(this.selectedImgs, 'uploads/img/'+img)}">
 						<img src="uploads/img/{{img}}">
 					</figure>
+				</a>
+				<a href="uploads/img/{{img}}" class="button download-btn" download="{{img}}">
+					<i class="fa fa-download"></i>
 				</a>
 				<button (click)="delItem('uploads/img/'+img)" class="delete"></button>
 				<figcaption>

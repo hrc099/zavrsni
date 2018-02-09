@@ -105,6 +105,25 @@ figcaption + span {
 	display: inline-block;
 }
 
+.itemList > div:hover .download-btn {
+	display: block !important;
+}
+
+.download-btn {
+   	font-weight: normal;
+	font-style: normal;
+	line-height: 1;
+	border: none;
+	background: #181818;
+	color: #e6e6e6;
+	position: absolute;
+	left: 5px;
+	bottom: 30px;
+	z-index: 1;
+	border-radius: 2px;
+	display: none !important;
+}
+
 .itemList > div:hover figure::before {
 	display: block;
 }

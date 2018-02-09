@@ -102,6 +102,12 @@ app.get('/uploads/img/:name', (req, res) => {
   res.sendFile(path.join(__dirname, `uploads/img/${name}`));
 });
 
+// Send requested file
+app.get('/uploads/doc/:name', (req, res) => {
+  let name = req.params.name;
+  res.sendFile(path.join(__dirname, `uploads/doc/${name}`));
+});
+
 // PassportJS login POST
 app.post('/login', passport.authenticate('local', { successRedirect: '/admin', failureRedirect: '/login' }));
 
