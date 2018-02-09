@@ -24,6 +24,7 @@
     "archiver": "^2.1.1",
     "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
     "core-js": "^2.4.1",
     "easy-zip": "0.0.4",
     "express": "^4.16.2",
