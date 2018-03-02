@@ -5,7 +5,7 @@
 				Izbrisali ste članak {{ backupClanak.name }}.
 			</span>
 			<button class="button" (click)="rollbackSadrzaj()">
-				Vrati člana 
+				Vrati članak 
 				<i class="fa fa-undo fa-fw" aria-hidden="true"></i>
 			</button>
 			<button class="button" (click)="rollbackSadrzajHidden=true">
@@ -26,7 +26,7 @@
 			  	<div class="control">
 				  	<div class="select">
 				  		<select #selectSadrzaj (change)="setNoviClanak(selectSadrzaj.value)">
-						  	<option disabled selected value> -- Odaberi članak -- </option>
+						  	<option disabled [selected]="!trenutniSadrzaj" value> -- Odaberi članak -- </option>
 						  	<option *ngFor="let clanak of sadrzaj" [value]="sadrzaj.indexOf(clanak)">
 						  		{{ clanak.name }}
 						  	</option>
@@ -35,6 +35,39 @@
 			  	</div>
 			  </div>
 			  <div *ngIf="trenutniSadrzaj">
+				<div class="field">
+					<label for="category" class="label">
+						Kategorija članka
+					</label>
+					<div class="select">
+						<select #selectCategory [(ngModel)]="trenutniSadrzaj.category" name="category">
+							<option value="Vijest">
+								Vijest
+							</option>
+							<option value="O nama">
+								O nama
+							</option>
+							<option value="Projekti">
+								Projekti
+							</option>
+							<option value="Članstvo">
+								Članstvo
+							</option>
+							<option value="Kontakt">
+								Kontakt
+							</option>
+						</select>
+					</div>
+				</div>
+				<div class="field">
+					<label for="author" class="label">Autor članka</label>
+					<div class="control">
+						<input type="text" id="author" required [(ngModel)]="trenutniSadrzaj.author" name="author" #author="ngModel" class="input">
+					</div>
+					<span [style.display]="author.valid?'none':'inline-block'" class="red-alert">
+						Autor nije unesen - sadržaj mora imati autora
+					</span>
+				</div>
 		    	<div class="field">
 		    		<label for="name" class="label">Ime</label>
 		    		<div class="control">
@@ -43,7 +76,7 @@
 		    		<span [style.display]="name.valid?'none':'inline-block'" class="red-alert">
 		    			Naslov nije unesen - sadržaj mora imati ime / naslov
 					</span>
-		    	</div>
+				</div>
 		    	<div class="field">
 		    		<label for="text" class="label">Tekst</label>
 		    		<div class="control">
@@ -147,7 +180,39 @@
 	  					<option value="true">Sa slikom</option>
 	  				</select>
 	  			</div>
-  			</div>
+			</div>
+			<div class="field">
+				<label for="noviClanakCategory" class="label">
+					Kategorija članka
+				</label>
+				<div class="select">
+					<select required [(ngModel)]="newSadrzaj.category" name="noviClanakCategory">
+						<option value="Vijest">
+							Vijest
+						</option>
+						<option value="O nama">
+							O nama
+						</option>
+						<option value="Projekti">
+							Projekti
+						</option>
+						<option value="Članstvo">
+							Članstvo
+						</option>
+						<option value="Kontakt">
+							Kontakt
+						</option>
+					</select>
+				</div>
+			</div>
+			<div class="field">
+				<label for="clanakAutor" class="label">
+					Autor članka
+				</label>
+				<div class="control">
+					<input type="text" [(ngModel)]="newSadrzaj.author" required name="noviClanakAutor" class="input">
+				</div>
+			</div>
   			<div class="field">
   				<label for="noviClanakName" class="label">
   					Ime

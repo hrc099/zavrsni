@@ -25,6 +25,8 @@ export class SadrzajFormaComponent implements OnInit {
 	@ViewChild('addSadrzajForm') addSadrzajForm: any;
 	newSadrzaj: Sadrzaj = {
 		pic: false,
+		author: '',
+		category: 'Vijest',
 		name: '',
 		text: ''
 	};
@@ -59,6 +61,8 @@ export class SadrzajFormaComponent implements OnInit {
 			updClanak = {
 				_id: clanak._id,
 				pic: clanak.pic,
+				category: clanak.category,
+				author: clanak.author,
 				name: clanak.name,
 				text: clanak.text,
 				img: clanak.img?clanak.img:null
@@ -73,8 +77,8 @@ export class SadrzajFormaComponent implements OnInit {
 		this.backupClanak = this.sadrzaj[br];
 		this._dataService.deleteSadrzaj(this.sadrzaj[br]._id)
 			.subscribe(data => {
+				this.trenutniSadrzaj = null;
 				this.pullSadrzaj();
-				this.setNoviClanak(0);
 				this.rollbackSadrzajHidden = false;
 			});
 	}
@@ -103,7 +107,7 @@ export class SadrzajFormaComponent implements OnInit {
 				.subscribe(data => {
 					this.pullSadrzaj();
 				});
-			this.newSadrzaj = new Sadrzaj(false, '', '');
+			this.newSadrzaj = new Sadrzaj(false, 'Vijest', '', '', '');
 		}
 	}
 
