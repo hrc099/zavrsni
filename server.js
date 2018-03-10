@@ -13,6 +13,13 @@ var bcrypt = require('bcrypt');
 // Init
 const app = express();
 
+// CORS
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 // API file for interacting with MongoDB
 const api = require('./server/routes/api');
 
