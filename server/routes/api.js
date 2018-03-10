@@ -7,6 +7,12 @@ const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
 var EasyZip = require('easy-zip').EasyZip;
 
+router.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 // Set Storage Engine
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
