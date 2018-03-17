@@ -83,7 +83,6 @@ router.get('/clanovi', (req, res) => {
             .toArray()
             .then((clanovi) => {
                 response.data = clanovi;
-                response.addHeader("Access-Control-Allow-Origin", "*");
                 res.json(response);
             })
             .catch((err) => {
@@ -169,7 +168,6 @@ router.get('/sadrzaj', (req,res) => {
             .toArray()
             .then((sadrzaj) => {
                 response.data = sadrzaj;
-                response.addHeader("Access-Control-Allow-Origin", "*");
                 res.json(response);
             })
             .catch((err) => {
