@@ -1,27 +1,24 @@
-# Zavrsnitest
+# USGZ Admin
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.9.
+MEAN stack aplikacija za administraciju rada udruge studenata. Ujedno i završni rad na preddiplomskom studiju računarstva.
 
-## Development server
+## Korišteno
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+* MongoDB
+* NodeJS
+* ExpressJS
+* multer
+* PassportJS
+* Angular
 
-## Code scaffolding
+## Info o aplikaciji
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Aplikacija služi za ažuriranje podataka o članovima udruge, za administriranje podataka u bazi koji se prikazuju na javnoj web stranici udruge te za upravljanje datotekama na poslužitelju koje se serviraju na stranici udruge.
 
-## Build
+## Autor
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+Hrvoje Husnjak
 
-## Running unit tests
+## Ostali info
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Aplikacija je namijenjena Udruzi studenata grada Zaprešića.
